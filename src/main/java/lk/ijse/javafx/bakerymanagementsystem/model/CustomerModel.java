@@ -6,21 +6,38 @@ import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerModel {
+
+    public static List<CustomerDto> getAllCustomers() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select * from customer");
+
+        ArrayList<CustomerDto> list = new ArrayList<>();
+        while (rst.next()) {
+            CustomerDto customerDto = new CustomerDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4)
+            );
+            list.add(customerDto);
+        }
+        return list;
+    }
+
     public ArrayList<CustomerDto> viewAllCustomer()throws ClassNotFoundException,SQLException{
         ResultSet rs =CrudUtil.execute("SELECT * FROM Customer");
-        ArrayList<CustomerDto> customerDtos = new ArrayList<>();
+        ArrayList<CustomerDto> customerDto = new ArrayList<>();
         while (rs.next()){
-            customerDtos.add(new CustomerDto(
-                    rs.getString("customer_id"),
-                    rs.getString("name"),
-                    rs.getString("address"),
-                    rs.getString("contact")
+            customerDto.add(new CustomerDto(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4)
             ));
         }
-
-        return customerDtos;
+        return customerDto;
     }
     public String getNextId() throws SQLException, ClassNotFoundException {
         ResultSet rst = CrudUtil.execute("select customer_id from Customer order by customer_id desc limit 1");
@@ -48,4 +65,33 @@ public class CustomerModel {
       );
 
     }
+
+//    public ArrayList<CustomerDto> getAllCustomer() throws SQLException, ClassNotFoundException {
+//        ResultSet rst = CrudUtil.execute("select * from customer");
+//
+//        ArrayList<CustomerDto> list = new ArrayList<>();
+//        while (rst.next()) {
+//            CustomerDto customerDto = new CustomerDto(
+//                    rst.getString(1),
+//                    rst.getString(2),
+//                    rst.getString(3),
+//                    rst.getString(4)
+//            );
+//            list.add(customerDto);
+//        }
+//        return list;
+//    }
+
+    public boolean deleteCustomer(String customerId) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("delete from Customer where customer_id = ?",customerId);
+    }
+
+    public boolean updateCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("update Customer set name = ?, address = ?, contact = ? where customer_id = ?",
+                customerDto.getName(),
+                customerDto.getAddress(),
+                customerDto.getContact(),
+                customerDto.getCustomerId());
+    }
+
 }

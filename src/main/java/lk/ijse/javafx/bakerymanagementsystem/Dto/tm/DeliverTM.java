@@ -1,15 +1,15 @@
-package lk.ijse.javafx.bakerymanagementsystem.Dto;
+package lk.ijse.javafx.bakerymanagementsystem.Dto.tm;
 
 import lombok.*;
 
 import java.util.Date;
 
-@ToString
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliverDto {
+@Getter
+@Setter
+@ToString
+public class DeliverTM {
     private String deliverId;
     private String deliverAddress;
     private int deliverCharge;

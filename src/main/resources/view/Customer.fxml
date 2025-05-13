@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancCustomerss" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.CustomerController">
+<AnchorPane fx:id="ancCustomer" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.CustomerController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -24,19 +24,19 @@
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="127.0" text="      Name" />
-                  <TextField fx:id="txtName" prefHeight="35.0" prefWidth="378.0" />
+                  <TextField fx:id="txtName" onKeyReleased="#txtNameChange" prefHeight="35.0" prefWidth="378.0" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-border-width: 0 0 2px 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Address" />
-                  <TextField fx:id="txtAddress" prefHeight="38.0" prefWidth="377.0" />
+                  <TextField fx:id="txtAddress" prefHeight="38.0" prefWidth="377.0" style="-fx-background-color: #fff; -fx-border-color: #fff; -fx-border-width: 0 0 2px 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Phone" />
-                  <TextField fx:id="txtPhone" prefHeight="35.0" prefWidth="376.0" />
+                  <TextField fx:id="txtPhone" prefHeight="35.0" prefWidth="376.0" style="-fx-border-width: 0 0 2px 0; -fx-background-color: #fff; -fx-border-color: #fff;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="70.0">
@@ -55,9 +55,9 @@
                   <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #55efc4;" text="Save" textFill="WHITE" />
                </children>
             </HBox>
-            <TableView fx:id="tblCustomer" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblCustomer" onMouseClicked="#onClickTable" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colid" prefWidth="75.0" text="Customer Id" />
+                  <TableColumn fx:id="colId" prefWidth="75.0" text="Customer Id" />
                   <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
                   <TableColumn fx:id="colAddress" prefWidth="75.0" text="Address" />
                   <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
