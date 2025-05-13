@@ -1,35 +1,47 @@
 package lk.ijse.javafx.bakerymanagementsystem.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
+import lk.ijse.javafx.bakerymanagementsystem.Dto.UserDto;
+import lk.ijse.javafx.bakerymanagementsystem.model.UserModel;
 
-public class UserController {
+import java.net.URL;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+public class UserController implements Initializable {
 
     @FXML
     private AnchorPane ancUser;
 
     @FXML
-    private TableColumn<?, ?> coUserName;
+    private TableColumn<UserDto, String> coUserName;
 
     @FXML
-    private TableColumn<?, ?> colPassword;
+    private TableColumn<UserDto, String> colPassword;
 
     @FXML
-    private TableColumn<?, ?> colRole;
+    private TableColumn<UserDto, String> colRole;
 
     @FXML
-    private TableColumn<?, ?> colid;
+    private TableColumn<UserDto, String> colid;
 
     @FXML
     private Label lblId;
 
     @FXML
-    private TableView<?> tblUser;
+    private TableView<UserDto> tblUser;
 
     @FXML
     private TextField txtPassword;
@@ -40,24 +52,200 @@ public class UserController {
     @FXML
     private TextField txtUserName;
 
+    private final UserModel userModel = new UserModel();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        try {
+            loadNextId();
+            loadTable();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load data.").show();
+        }
+    }
+
+    @FXML
+    void btnSaveOnAction(ActionEvent event) {
+        if (!validateInputs()) return;
+
+        UserDto userDto = createUserDtoFromInputs();
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.initStyle(StageStyle.UNDECORATED);
+        confirmationAlert.setContentText("Are you sure you want to save this User?");
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                boolean isAdded = userModel.saveUser(userDto);
+                if (isAdded) {
+                    new Alert(Alert.AlertType.INFORMATION, "User added successfully!").show();
+                    loadTable();
+                    resetPage();
+                    loadNextId();
+                } else {
+                    new Alert(Alert.AlertType.WARNING, "Failed to add User!").show();
+                }
+            } catch (SQLIntegrityConstraintViolationException e) {
+                new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage()).show();
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Unexpected error occurred while adding the user!").show();
+            }
+        }
+    }
+
+    @FXML
+    void btnUpdateOnAction(ActionEvent event) {
+        if (!validateInputs()) return;
+
+        UserDto userDto = createUserDtoFromInputs();
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.initStyle(StageStyle.UNDECORATED);
+        confirmationAlert.setContentText("Are you sure you want to update this User?");
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                boolean isUpdated = userModel.updateUser(userDto);
+                if (isUpdated) {
+                    new Alert(Alert.AlertType.INFORMATION, "User updated successfully!").show();
+                    loadTable();
+                    resetPage();
+                    loadNextId();
+                } else {
+                    new Alert(Alert.AlertType.WARNING, "Failed to update User!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+        UserDto selectedUser = tblUser.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a user to delete.").show();
+            return;
+        }
 
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.initStyle(StageStyle.UNDECORATED);
+        confirmationAlert.setContentText("Are you sure you want to delete this User?");
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                boolean isDeleted = userModel.deleteUser(selectedUser.getUserId());
+                if (isDeleted) {
+                    new Alert(Alert.AlertType.INFORMATION, "User deleted successfully!").show();
+                    loadTable();
+                    resetPage();
+                    loadNextId();
+                } else {
+                    new Alert(Alert.AlertType.WARNING, "Failed to delete User!").show();
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
+            }
+        }
     }
 
     @FXML
     void btnResetOnAction(ActionEvent event) {
 
+        try {
+            resetPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load next user ID.").show();
+        }
     }
 
-    @FXML
-    void btnSaveOnAction(ActionEvent event) {
-
+    public void setData(MouseEvent mouseEvent) {
+        UserDto userDto = tblUser.getSelectionModel().getSelectedItem();
+        if (userDto != null) {
+            lblId.setText(userDto.getUserId());
+            txtUserName.setText(userDto.getUserName());
+            txtPassword.setText(userDto.getPassword());
+            txtRole.setText(userDto.getRole());
+        }
     }
 
-    @FXML
-    void btnUpdateOnAction(ActionEvent event) {
-
+    private void resetPage() throws SQLException, ClassNotFoundException {
+        loadNextId();
+        txtUserName.clear();
+        txtPassword.clear();
+        txtRole.clear();
+        tblUser.getSelectionModel().clearSelection();
     }
 
+    private void loadNextId() throws SQLException, ClassNotFoundException {
+        lblId.setText(userModel.getNextId());
+    }
+
+    private void loadTable() {
+        colid.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        coUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+
+        try {
+            ArrayList<UserDto> users = userModel.getAllUsers();
+            if (users != null && !users.isEmpty()) {
+                ObservableList<UserDto> userList = FXCollections.observableArrayList(users);
+                tblUser.setItems(userList);
+            } else {
+                tblUser.setItems(FXCollections.observableArrayList());
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load users.").show();
+        }
+    }
+
+    private boolean validateInputs() {
+        String userName = txtUserName.getText().trim();
+        String password = txtPassword.getText().trim();
+        String role = txtRole.getText().trim();
+
+        if (userName.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Username is required.").show();
+            txtUserName.requestFocus();
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Password is required.").show();
+            txtPassword.requestFocus();
+            return false;
+        }
+
+        if (role.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Role is required.").show();
+            txtRole.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private UserDto createUserDtoFromInputs() {
+        return new UserDto(
+                lblId.getText(),
+                txtUserName.getText(),
+                txtPassword.getText(),
+                txtRole.getText()
+        );
+    }
 }

@@ -18,7 +18,7 @@ public class DeliverModel {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getInt(3),
-                    resultSet.getDate(4),
+                    resultSet.getString(4),
                     resultSet.getString(5)
             );
             list.add(deliverDto);
@@ -38,5 +38,14 @@ public class DeliverModel {
             return nextIdString;
         }
         return tableChar + "001";
+    }
+
+    public boolean saveDeliver(DeliverDto deliverDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("insert into Deliver values(?,?,?,?,?)",
+                deliverDto.getDeliverId(),
+                deliverDto.getDeliverAddress(),
+                deliverDto.getDeliverCharge(),
+                deliverDto.getDeliverDate(),
+                deliverDto.getOrderId());
     }
 }

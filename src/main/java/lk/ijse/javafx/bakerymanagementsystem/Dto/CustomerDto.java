@@ -1,9 +1,8 @@
-
 package lk.ijse.javafx.bakerymanagementsystem.Dto;
 
 import lombok.*;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -13,4 +12,12 @@ public class CustomerDto {
     private String name;
     private String address;
     private String contact;
+
+    public CustomerDto(String customerId, String name, String address, String contact) {
+        this.customerId = customerId;
+        this.name = name;
+        this.address = address;
+        this.contact = contact;
+    }
+
 }

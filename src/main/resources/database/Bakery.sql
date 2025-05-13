@@ -3,8 +3,8 @@ CREATE DATABASE Bakery;
 USE Bakery;
 CREATE TABLE Customer (
                           customer_id VARCHAR(100) PRIMARY KEY,
-                          name VARCHAR(100) NOT NULL,zz
-                                      address VARCHAR(100),
+                          name VARCHAR(100) NOT NULL,
+                          address VARCHAR(100),
                           contact VARCHAR(10) NOT NULL
 );
 
@@ -183,4 +183,3 @@ INSERT INTO Employee_Details (id, employee_id, address, work_shift, date_of_birt
 VALUES ('ED001', 'E001', '78 Office Lane', 'Morning', '1990-05-20');
 
 SELECT *  FROM Customer;
-

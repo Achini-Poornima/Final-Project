@@ -13,6 +13,8 @@ public class DeliverDto {
     private String deliverId;
     private String deliverAddress;
     private int deliverCharge;
-    private Date deliverDate;
+    private String deliverDate;
     private String orderId;
+
+
 }
