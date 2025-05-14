@@ -48,4 +48,14 @@ public class DeliverModel {
                 deliverDto.getDeliverDate(),
                 deliverDto.getOrderId());
     }
+
+
+    public boolean updaDeliver(DeliverDto deliverDto) {
+    }
+
+    public boolean deleteDeliver(String deliverId) {
+    }
+
+    public ArrayList<DeliverDto> getAllUsers() {
+    }
 }

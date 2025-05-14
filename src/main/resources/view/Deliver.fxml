@@ -70,7 +70,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblDeliver" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblDeliver" onMouseClicked="#setData" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colid" prefWidth="75.0" text="Deliver Id" />
                   <TableColumn fx:id="colDeliverAddress" prefWidth="75.0" text="Deliver Address" />

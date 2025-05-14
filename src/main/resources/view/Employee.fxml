@@ -82,7 +82,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblEmployee" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblEmployee" onMouseClicked="#onSetData" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colid" prefWidth="75.0" text="Employee Id" />
                   <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />

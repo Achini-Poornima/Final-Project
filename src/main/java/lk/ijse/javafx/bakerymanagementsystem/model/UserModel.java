@@ -22,12 +22,12 @@ public class UserModel {
         String sql = "DELETE FROM Users WHERE user_id = ?";
         return CrudUtil.execute(sql, userId);
     }
+
     public boolean checkLogin(String username, String password) throws Exception {
         String sql = "SELECT * FROM Users WHERE user_name = ? AND password = ?";
         ResultSet resultSet = CrudUtil.execute(sql, username, password);
         return resultSet.next();
     }
-
 
 
     public ArrayList<UserDto> getAllUsers() throws SQLException, ClassNotFoundException {
@@ -44,6 +44,7 @@ public class UserModel {
         }
         return userDtos;
     }
+
     public String getNextId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select user_id from Users order by user_id desc limit 1");
         char tableChar = 'U';

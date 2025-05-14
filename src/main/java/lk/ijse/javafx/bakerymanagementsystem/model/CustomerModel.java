@@ -25,20 +25,6 @@ public class CustomerModel {
         }
         return list;
     }
-
-    public ArrayList<CustomerDto> viewAllCustomer()throws ClassNotFoundException,SQLException{
-        ResultSet rs =CrudUtil.execute("SELECT * FROM Customer");
-        ArrayList<CustomerDto> customerDto = new ArrayList<>();
-        while (rs.next()){
-            customerDto.add(new CustomerDto(
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4)
-            ));
-        }
-        return customerDto;
-    }
     public String getNextId() throws SQLException, ClassNotFoundException {
         ResultSet rst = CrudUtil.execute("select customer_id from Customer order by customer_id desc limit 1");
 
@@ -56,8 +42,14 @@ public class CustomerModel {
          return "C001";
     }
 
+//    public boolean checkLogin(String username, String password) throws Exception {
+//        String sql = "SELECT * FROM Users WHERE user_name = ? AND password = ?";
+//        ResultSet resultSet = CrudUtil.execute(sql, username, password);
+//        return resultSet.next();
+//    }
+
      public boolean saveCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-      return CrudUtil.execute("insert into Customer values (?,?,?,?)",
+        return CrudUtil.execute("insert into Customer values (?,?,?,?)",
               customerDto.getCustomerId(),
               customerDto.getName(),
               customerDto.getAddress(),
@@ -65,22 +57,6 @@ public class CustomerModel {
       );
 
     }
-
-//    public ArrayList<CustomerDto> getAllCustomer() throws SQLException, ClassNotFoundException {
-//        ResultSet rst = CrudUtil.execute("select * from customer");
-//
-//        ArrayList<CustomerDto> list = new ArrayList<>();
-//        while (rst.next()) {
-//            CustomerDto customerDto = new CustomerDto(
-//                    rst.getString(1),
-//                    rst.getString(2),
-//                    rst.getString(3),
-//                    rst.getString(4)
-//            );
-//            list.add(customerDto);
-//        }
-//        return list;
-//    }
 
     public boolean deleteCustomer(String customerId) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("delete from Customer where customer_id = ?",customerId);
@@ -93,5 +69,4 @@ public class CustomerModel {
                 customerDto.getContact(),
                 customerDto.getCustomerId());
     }
-
 }
