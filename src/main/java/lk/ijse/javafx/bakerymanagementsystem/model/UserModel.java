@@ -40,7 +40,6 @@ public class UserModel {
                     resultSet.getString("password"),
                     resultSet.getString("role")
             ));
-
         }
         return userDtos;
     }

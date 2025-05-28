@@ -208,8 +208,8 @@ public class CustomerController implements Initializable {
         colContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
 
         try {
-            ArrayList<CustomerDto> customers = (ArrayList<CustomerDto>) customerModel.getAllCustomers();
-            if (customers != null && !customers.isEmpty()){
+            ArrayList<CustomerDto> customers = (ArrayList<CustomerDto>) CustomerModel.getAllCustomers();
+            if (customers != null){
                 ObservableList<CustomerDto> customerList = FXCollections.observableArrayList(customers);
                 tblCustomer.setItems(customerList);
             }else {

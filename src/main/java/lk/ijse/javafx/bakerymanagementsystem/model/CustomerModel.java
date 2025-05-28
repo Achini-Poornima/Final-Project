@@ -11,7 +11,7 @@ import java.util.List;
 public class CustomerModel {
 
     public static List<CustomerDto> getAllCustomers() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute("select * from customer");
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Customer");
 
         ArrayList<CustomerDto> list = new ArrayList<>();
         while (rst.next()) {

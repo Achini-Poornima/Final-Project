@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class PaymentController {
@@ -23,13 +24,7 @@ public class PaymentController {
     private TableColumn<?, ?> colOrderId;
 
     @FXML
-    private TableColumn<?, ?> colPaymentDate;
-
-    @FXML
-    private TableColumn<?, ?> colPaymentMethod;
-
-    @FXML
-    private TableColumn<?, ?> colid;
+    private TableColumn<?, ?> colPaymentMethord;
 
     @FXML
     private Label lblId;
@@ -45,9 +40,6 @@ public class PaymentController {
 
     @FXML
     private TextField txtOrderId;
-
-    @FXML
-    private TextField txtPaymentDate;
 
     @FXML
     private TextField txtPaymentMethod;
@@ -72,5 +64,9 @@ public class PaymentController {
 
     }
 
-}
+    @FXML
+    void onSetData(MouseEvent event) {
 
+    }
+
+}

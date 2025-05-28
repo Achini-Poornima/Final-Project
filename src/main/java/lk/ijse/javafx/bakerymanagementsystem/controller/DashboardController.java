@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class DashboardController {
 
@@ -15,14 +16,10 @@ public class DashboardController {
     private AnchorPane ancMainContainer;
 
     @FXML
-    void btnCustomerOnAction(ActionEvent event) {
-navigateTo("/view/Customer.fxml");
-    }
+    void btnCustomerOnAction(ActionEvent event) {navigateTo("/view/Customer.fxml");}
 
     @FXML
-    void btnDeliverOnAction(ActionEvent event) {
-        navigateTo("/view/Deliver.fxml");
-    }
+    void btnDeliverOnAction(ActionEvent event) {navigateTo("/view/Deliver.fxml");}
 
     @FXML
     void btnEmployeeOnAction(ActionEvent event) {
@@ -65,9 +62,7 @@ navigateTo("/view/Customer.fxml");
     }
 
     @FXML
-    void btnSuppliersOnAction(ActionEvent event) {
-        navigateTo("/view/Supplier.fxml");
-    }
+    void btnSuppliersOnAction(ActionEvent event) {navigateTo("/view/Supplier.fxml");}
 
     @FXML
     void btnUserOnAction(ActionEvent event) {
@@ -78,7 +73,7 @@ navigateTo("/view/Customer.fxml");
 
             ancMainContainer.getChildren().clear();
 
-            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+            AnchorPane anchorPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
             anchorPane.prefWidthProperty().bind(ancMainContainer.widthProperty());
             anchorPane.prefHeightProperty().bind(ancMainContainer.heightProperty());
             ancMainContainer.getChildren().add(anchorPane);

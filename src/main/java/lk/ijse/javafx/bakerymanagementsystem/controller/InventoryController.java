@@ -6,12 +6,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class InventoryController {
 
     @FXML
-    private AnchorPane ancInventory;
+    private AnchorPane ancIngredient;
+
+    @FXML
+    private TableColumn<?, ?> colIngredientId;
 
     @FXML
     private TableColumn<?, ?> colLastUpdate;
@@ -23,16 +27,16 @@ public class InventoryController {
     private TableColumn<?, ?> colStockQuantity;
 
     @FXML
-    private TableColumn<?, ?> colSupplierId;
-
-    @FXML
-    private TableColumn<?, ?> colid;
+    private TableColumn<?, ?> colinventoryId;
 
     @FXML
     private Label lblId;
 
     @FXML
     private TableView<?> tblInventory;
+
+    @FXML
+    private TextField txtIngredientId;
 
     @FXML
     private TextField txtLastUpdate;
@@ -42,9 +46,6 @@ public class InventoryController {
 
     @FXML
     private TextField txtStockQuantity;
-
-    @FXML
-    private TextField txtSupplierId;
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -63,6 +64,11 @@ public class InventoryController {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSetData(MouseEvent event) {
 
     }
 

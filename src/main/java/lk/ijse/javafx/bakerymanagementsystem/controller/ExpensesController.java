@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class ExpensesController {
@@ -14,7 +15,10 @@ public class ExpensesController {
     private AnchorPane ancExpenses;
 
     @FXML
-    private TableColumn<?, ?> colCatogary;
+    private TableColumn<?, ?> colAmount;
+
+    @FXML
+    private TableColumn<?, ?> colCategory;
 
     @FXML
     private TableColumn<?, ?> colDate;
@@ -23,10 +27,7 @@ public class ExpensesController {
     private TableColumn<?, ?> colDescription;
 
     @FXML
-    private TableColumn<?, ?> colIngredientAmount;
-
-    @FXML
-    private TableColumn<?, ?> colid;
+    private TableColumn<?, ?> colExpensesId;
 
     @FXML
     private Label lblId;
@@ -35,16 +36,16 @@ public class ExpensesController {
     private TableView<?> tblExpenses;
 
     @FXML
-    private TextField txtCatogary;
+    private TextField txtAmount;
+
+    @FXML
+    private TextField txtCategory;
 
     @FXML
     private TextField txtDate;
 
     @FXML
     private TextField txtDescription;
-
-    @FXML
-    private TextField txtIngredientAmount;
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -63,6 +64,11 @@ public class ExpensesController {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSetData(MouseEvent event) {
 
     }
 

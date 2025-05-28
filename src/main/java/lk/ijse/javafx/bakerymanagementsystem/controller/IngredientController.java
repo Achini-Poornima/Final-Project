@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class IngredientController {
@@ -17,6 +18,9 @@ public class IngredientController {
     private TableColumn<?, ?> colExpireDate;
 
     @FXML
+    private TableColumn<?, ?> colIngredientId;
+
+    @FXML
     private TableColumn<?, ?> colName;
 
     @FXML
@@ -26,13 +30,10 @@ public class IngredientController {
     private TableColumn<?, ?> colSupplierId;
 
     @FXML
-    private TableColumn<?, ?> colid;
-
-    @FXML
     private Label lblId;
 
     @FXML
-    private TableView<?> tblIngredient;
+    private TableView<?> tblingredient;
 
     @FXML
     private TextField txtExpireDate;
@@ -63,6 +64,11 @@ public class IngredientController {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSetData(MouseEvent event) {
 
     }
 

@@ -56,7 +56,6 @@ public class UserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             loadNextId();
             loadTable();
@@ -69,7 +68,7 @@ public class UserController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (!validateInputs()) return;
+        if (!validDateInputs()) return;
 
         UserDto userDto = createUserDtoFromInputs();
 
@@ -102,7 +101,7 @@ public class UserController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        if (!validateInputs()) return;
+        if (!validDateInputs()) return;
 
         UserDto userDto = createUserDtoFromInputs();
 
@@ -164,7 +163,6 @@ public class UserController implements Initializable {
 
     @FXML
     void btnResetOnAction(ActionEvent event) {
-
         try {
             resetPage();
         } catch (Exception e) {
@@ -214,7 +212,7 @@ public class UserController implements Initializable {
         }
     }
 
-    private boolean validateInputs() {
+    private boolean validDateInputs() {
         String userName = txtUserName.getText().trim();
         String password = txtPassword.getText().trim();
         String role = txtRole.getText().trim();

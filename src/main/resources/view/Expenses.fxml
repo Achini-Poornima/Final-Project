@@ -13,54 +13,68 @@
 
 <AnchorPane fx:id="ancExpenses" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.ExpensesController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="30.0" layoutY="17.0" prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="28.0" prefWidth="823.0" spacing="10.0">
+            <Label text="Expenses Manage" textFill="#150c65">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="53.0" prefWidth="560.0" spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Expenses Id" />
-                  <Label fx:id="lblId" prefHeight="29.0" prefWidth="132.0" />
+                  <Label fx:id="lblId" prefHeight="27.0" prefWidth="132.0" style="-fx-background-color: #dfe6e9; -fx-border-color: #0984e3; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
-            <HBox prefHeight="26.0" prefWidth="823.0" spacing="10.0">
+            <HBox spacing="10.0">
                <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="     Catogary" />
-                  <TextField fx:id="txtCatogary" prefHeight="24.0" prefWidth="425.0" />
+                  <Label prefHeight="39.0" prefWidth="127.0" text="     Category" />
+                  <TextField fx:id="txtCategory" prefHeight="35.0" prefWidth="378.0" promptText="Category" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
-            <HBox prefHeight="25.0" prefWidth="823.0" spacing="10.0">
+            <HBox spacing="10.0">
                <children>
-                  <Label prefHeight="39.0" prefWidth="127.0" text="Ingredient AmountList" />
-                  <TextField fx:id="txtIngredientAmount" prefHeight="24.0" prefWidth="425.0" />
+                  <Label prefHeight="39.0" prefWidth="128.0" text="     Amount" />
+                  <TextField fx:id="txtAmount" prefHeight="35.0" prefWidth="376.0" promptText="0000000000" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
-            <HBox prefHeight="23.0" prefWidth="823.0" spacing="10.0">
+            <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Date" />
-                  <TextField fx:id="txtDate" prefHeight="24.0" prefWidth="423.0" />
+                  <TextField fx:id="txtDate" prefHeight="35.0" prefWidth="376.0" promptText="Date" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
-            <HBox prefHeight="24.0" prefWidth="823.0" spacing="10.0">
+            <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Description" />
-                  <TextField fx:id="txtDescription" prefHeight="24.0" prefWidth="426.0" />
+                  <TextField fx:id="txtDescription" prefHeight="35.0" prefWidth="376.0" promptText="Description" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="823.0" spacing="70.0">
+            <HBox alignment="CENTER" spacing="70.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #fab1a0;" text="Reset" textFill="WHITE" />
-                  <Button mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #d63031;" text="Delete" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #fab1a0;" text="Reset" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #d63031;" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #0984e3;" text="Update" textFill="WHITE" />
                   <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #55efc4;" text="Save" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
-                     </font></Button>
+                     </font>
+                  </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblExpenses" prefHeight="341.0" prefWidth="823.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblExpenses" onMouseClicked="#onSetData" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colid" prefWidth="75.0" text="Expenses Id" />
-                  <TableColumn fx:id="colCatogary" prefWidth="75.0" text="Catogary" />
-                  <TableColumn fx:id="colIngredientAmount" prefWidth="75.0" text="Ingeridient Amount" />
+                  <TableColumn fx:id="colExpensesId" prefWidth="75.0" text="Expenses Id" />
+                  <TableColumn fx:id="colCategory" prefWidth="75.0" text="Category" />
+                  <TableColumn fx:id="colAmount" prefWidth="75.0" text="Amount" />
                   <TableColumn fx:id="colDate" prefWidth="75.0" text="Date" />
                   <TableColumn fx:id="colDescription" prefWidth="75.0" text="Description" />
                </columns>

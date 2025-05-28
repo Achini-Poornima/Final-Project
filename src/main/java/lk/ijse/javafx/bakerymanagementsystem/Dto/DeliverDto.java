@@ -16,5 +16,6 @@ public class DeliverDto {
     private String deliverDate;
     private String orderId;
 
-
+    public DeliverDto(String text, String text1, String text2, String text3, String text4) {
+    }
 }

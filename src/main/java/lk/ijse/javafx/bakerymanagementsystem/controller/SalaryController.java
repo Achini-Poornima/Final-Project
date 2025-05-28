@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class SalaryController {
@@ -29,7 +30,7 @@ public class SalaryController {
     private TableColumn<?, ?> colPaymentDate;
 
     @FXML
-    private TableColumn<?, ?> colid;
+    private TableColumn<?, ?> colSalaryId;
 
     @FXML
     private Label lblId;
@@ -44,7 +45,7 @@ public class SalaryController {
     private TextField txtBonus;
 
     @FXML
-    private TextField txtEmployeeid;
+    private TextField txtEmployeeId;
 
     @FXML
     private TextField txtNetSalary;
@@ -69,6 +70,11 @@ public class SalaryController {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSetData(MouseEvent event) {
 
     }
 

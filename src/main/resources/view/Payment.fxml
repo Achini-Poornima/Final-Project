@@ -11,65 +11,71 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancPayment" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.PaymentController">
+<AnchorPane fx:id="ancPayment" prefHeight="710.0" prefWidth="1003.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.PaymentController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="50.0" layoutY="37.0" prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox spacing="10.0">
+            <Label text="Payment Manage" textFill="#150c65">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="35.0" prefWidth="963.0" spacing="10.0">
                <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="Payment Id" />
-                  <Label fx:id="lblId" prefHeight="29.0" prefWidth="132.0" />
+                  <Label prefHeight="31.0" prefWidth="148.0" text="     Payment Id" />
+                  <Label fx:id="lblId" prefHeight="27.0" prefWidth="132.0" style="-fx-background-color: #dfe6e9; -fx-border-color: #0984e3; -fx-border-width: 0 0 2 0;" />
+               </children>
+            </HBox>
+            <HBox prefHeight="36.0" prefWidth="963.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="29.0" prefWidth="147.0" text="     Amount" />
+                  <TextField fx:id="txtAmount" prefHeight="39.0" prefWidth="378.0" promptText="Amount" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Label prefHeight="39.0" prefWidth="127.0" text="Amount" />
-                  <TextField fx:id="txtAmount" prefHeight="35.0" prefWidth="378.0" />
+                  <Label prefHeight="28.0" prefWidth="149.0" text="     Payment Methord" />
+                  <TextField fx:id="txtPaymentMethod" prefHeight="35.0" prefWidth="376.0" promptText="Cash/Credit" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="Payment Method" />
-                  <TextField fx:id="txtPaymentMethod" prefHeight="38.0" prefWidth="377.0" />
+                  <Label prefHeight="30.0" prefWidth="149.0" text="     Attribute" />
+                  <TextField fx:id="txtAttribute" prefHeight="35.0" prefWidth="376.0" promptText="Attribute" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="Payment Date" />
-                  <TextField fx:id="txtPaymentDate" prefHeight="35.0" prefWidth="376.0" />
+                  <Label prefHeight="30.0" prefWidth="150.0" text="     Order Id" />
+                  <TextField fx:id="txtOrderId" prefHeight="35.0" prefWidth="376.0" promptText="Order Id" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
-            <HBox spacing="10.0">
-               <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="Attribute" />
-                  <TextField fx:id="txtAttribute" prefHeight="35.0" prefWidth="376.0" />
-               </children>
-            </HBox>
-            <HBox spacing="10.0">
-               <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="Order Id" />
-                  <TextField fx:id="txtOrderId" prefHeight="35.0" prefWidth="376.0" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="70.0">
+            <HBox alignment="CENTER_RIGHT" spacing="70.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #fab1a0;" text="Reset" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #d63031;" text="Delete" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #d63031;" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #0984e3;" text="Update" textFill="WHITE" />
-                  <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #55efc4;" text="Save" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #55efc4;" text="Save" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblPayment" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblPayment" onMouseClicked="#onSetData" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colid" prefWidth="75.0" text="Payment Id" />
+                  <TableColumn fx:id="colPaymentMethord" prefWidth="75.0" text="Payment Id" />
                   <TableColumn fx:id="colAmount" prefWidth="75.0" text="Amount" />
-                  <TableColumn fx:id="colPaymentMethod" prefWidth="75.0" text="Payment Method" />
-                  <TableColumn fx:id="colPaymentDate" prefWidth="75.0" text="Payment Date" />
-                  <TableColumn fx:id="colAttribute" prefWidth="75.0" text="Attribute" />
+                  <TableColumn fx:id="colPaymentMethord" prefWidth="75.0" text="Payment Methord" />
+                  <TableColumn fx:id="colAttribute" prefWidth="75.0" text="Attibute" />
                   <TableColumn fx:id="colOrderId" prefWidth="75.0" text="Order Id" />
                </columns>
                <columnResizePolicy>
