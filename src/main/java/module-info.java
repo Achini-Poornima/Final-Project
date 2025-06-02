@@ -3,6 +3,7 @@ module lk.ijse.javafx.bakerymanagementsystem {
     requires javafx.fxml;
     requires java.sql;
     requires static lombok;
+    requires org.jetbrains.annotations;
 
     opens lk.ijse.javafx.bakerymanagementsystem.controller to javafx.fxml;
     exports lk.ijse.javafx.bakerymanagementsystem;

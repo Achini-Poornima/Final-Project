@@ -3,6 +3,8 @@ package lk.ijse.javafx.bakerymanagementsystem.model;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.DeliverDto;
 import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class DeliverModel {
             deliverDtos.add(new DeliverDto(
                     resultSet.getString("deliver_id"),
                     resultSet.getString("deliver_address"),
-                    resultSet.getInt("deliver_charge"),
+                    resultSet.getDouble("deliver_charge"),
                     resultSet.getString("deliver_date"),
                     resultSet.getString("order_id")
             ));
@@ -45,7 +47,7 @@ public class DeliverModel {
     }
 
     public boolean updateDeliver(DeliverDto deliverDto) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE deliver SET deliver_address = ? , deliver_charge = ? , deliver_date = ? , order_id = ? WHERE deliver_id = ?";
+        String sql = "UPDATE Deliver SET deliver_address = ? , deliver_charge = ? , deliver_date = ? , order_id = ? WHERE deliver_id = ?";
         return CrudUtil.execute(sql, deliverDto.getDeliverAddress(), deliverDto.getDeliverCharge(), deliverDto.getDeliverDate(), deliverDto.getOrderId(), deliverDto.getDeliverId());
     }
 
@@ -53,4 +55,17 @@ public class DeliverModel {
         String sql = "DELETE FROM Deliver WHERE deliver_id = ?";
         return CrudUtil.execute(sql, deliverId);
     }
+
+    public ArrayList<String> getTodayOrderIds() throws SQLException, ClassNotFoundException {
+        ArrayList<String> orderIds = new ArrayList<>();
+
+        ResultSet rs = CrudUtil.execute("SELECT order_id FROM Orders WHERE DATE(order_date) = CURDATE()");
+
+        while (rs.next()) {
+            orderIds.add(rs.getString("order_id"));
+        }
+
+        return orderIds;
+    }
+
 }

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -13,7 +14,7 @@
 
 <AnchorPane fx:id="ancPayment" prefHeight="710.0" prefWidth="1003.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.PaymentController">
    <children>
-      <VBox layoutX="50.0" layoutY="37.0" prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="Payment Manage" textFill="#150c65">
                <font>
@@ -23,31 +24,26 @@
             <HBox prefHeight="35.0" prefWidth="963.0" spacing="10.0">
                <children>
                   <Label prefHeight="31.0" prefWidth="148.0" text="     Payment Id" />
-                  <Label fx:id="lblId" prefHeight="27.0" prefWidth="132.0" style="-fx-background-color: #dfe6e9; -fx-border-color: #0984e3; -fx-border-width: 0 0 2 0;" />
+                  <Label fx:id="lblId" prefHeight="27.0" prefWidth="132.0" style="-fx-background-color: #ffffff; -fx-border-color: #0984e3; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox prefHeight="36.0" prefWidth="963.0" spacing="10.0">
                <children>
                   <Label prefHeight="29.0" prefWidth="147.0" text="     Amount" />
-                  <TextField fx:id="txtAmount" prefHeight="39.0" prefWidth="378.0" promptText="Amount" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
+                  <TextField fx:id="txtAmount" prefHeight="35.0" prefWidth="376.0" promptText="Amount" style="-fx-border-color: #0984e3; -fx-background-color: #fffff; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="28.0" prefWidth="149.0" text="     Payment Methord" />
-                  <TextField fx:id="txtPaymentMethod" prefHeight="35.0" prefWidth="376.0" promptText="Cash/Credit" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
+                  <TextField fx:id="txtPaymentMethod" prefHeight="35.0" prefWidth="376.0" promptText="Cash/Credit" style="-fx-border-color: #0984e3; -fx-background-color: #fffff; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
-            <HBox spacing="10.0">
-               <children>
-                  <Label prefHeight="30.0" prefWidth="149.0" text="     Attribute" />
-                  <TextField fx:id="txtAttribute" prefHeight="35.0" prefWidth="376.0" promptText="Attribute" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
-               </children>
-            </HBox>
+            <HBox spacing="10.0" />
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="150.0" text="     Order Id" />
-                  <TextField fx:id="txtOrderId" prefHeight="35.0" prefWidth="376.0" promptText="Order Id" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
+                  <ComboBox prefHeight="35.0" prefWidth="376.0" style="-fx-background-color: #fffff;" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="70.0">
@@ -75,7 +71,6 @@
                   <TableColumn fx:id="colPaymentMethord" prefWidth="75.0" text="Payment Id" />
                   <TableColumn fx:id="colAmount" prefWidth="75.0" text="Amount" />
                   <TableColumn fx:id="colPaymentMethord" prefWidth="75.0" text="Payment Methord" />
-                  <TableColumn fx:id="colAttribute" prefWidth="75.0" text="Attibute" />
                   <TableColumn fx:id="colOrderId" prefWidth="75.0" text="Order Id" />
                </columns>
                <columnResizePolicy>

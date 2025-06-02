@@ -16,6 +16,7 @@ import lk.ijse.javafx.bakerymanagementsystem.model.DeliverModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -52,11 +53,12 @@ public class DeliverController implements Initializable {
     @FXML
     private TextField txtDeliverCharge;
 
-    @FXML
-    private TextField txtDeliverDate;
+
 
     @FXML
-    private TextField txtOrderId;
+    private ComboBox<String> txtOrderId;
+
+
 
     private final DeliverModel deliverModel = new DeliverModel();
     @FXML
@@ -136,17 +138,17 @@ public class DeliverController implements Initializable {
         return new DeliverDto(
                 lblId.getText(),
                 txtDeliverAddress.getText(),
-                txtDeliverCharge.getText(),
-                txtDeliverDate.getText(),
-                txtOrderId.getText()
+                Double.parseDouble(txtDeliverCharge.getText().trim()),
+                LocalDateTime.now(),
+                txtOrderId.getValue()
         );
     }
 
     private boolean validDataInputs() {
         String address = txtDeliverAddress.getText().trim();
         String charge = txtDeliverCharge.getText().trim();
-        String date = txtDeliverDate.getText().trim();
-        String orderId = txtOrderId.getText().trim();
+        LocalDateTime date =  LocalDateTime.now();
+        String orderId = txtOrderId.getValue().trim();
 
         if (address.isEmpty()){
             new Alert(Alert.AlertType.WARNING,"Address is required.").show();
@@ -156,11 +158,6 @@ public class DeliverController implements Initializable {
         if (charge.isEmpty()){
             new Alert(Alert.AlertType.WARNING,"Charges are required.").show();
             txtDeliverCharge.requestFocus();
-            return true;
-        }
-        if (date.isEmpty()){
-            new Alert(Alert.AlertType.WARNING,"Date is required.").show();
-            txtDeliverDate.requestFocus();
             return true;
         }
         if (orderId.isEmpty()){
@@ -209,8 +206,7 @@ public class DeliverController implements Initializable {
              lblId.setText(deliverDto.getDeliverId());
              txtDeliverAddress.setText(deliverDto.getDeliverAddress());
              txtDeliverCharge.setText(String.valueOf(deliverDto.getDeliverCharge()));
-             txtDeliverDate.setText(deliverDto.getDeliverDate());
-             txtOrderId.setText(deliverDto.getOrderId());
+             txtOrderId.setValue(deliverDto.getOrderId());
          }
     }
 
@@ -220,10 +216,22 @@ public class DeliverController implements Initializable {
               loadNextId();
               loadTable();
               resetPage();
+              loadTodayOrderIds();
           }catch (Exception e){
               e.printStackTrace();
               new Alert(Alert.AlertType.ERROR,"Failed To load Table..").show();
           }
+    }
+
+    private void loadTodayOrderIds() {
+        try {
+            ArrayList<String> orderIds = deliverModel.getTodayOrderIds();
+            ObservableList<String> observableOrderIds = FXCollections.observableArrayList(orderIds);
+            txtOrderId.setItems(observableOrderIds);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load today's order IDs.").show();
+        }
     }
 
     private void loadTable() throws SQLException, ClassNotFoundException {
@@ -251,8 +259,7 @@ public class DeliverController implements Initializable {
        loadNextId();
        txtDeliverAddress.clear();
        txtDeliverCharge.clear();
-       txtDeliverDate.clear();
-       txtOrderId.clear();
+       txtOrderId.setValue(null);
        tblDeliver.getSelectionModel().clearSelection();
     }
 

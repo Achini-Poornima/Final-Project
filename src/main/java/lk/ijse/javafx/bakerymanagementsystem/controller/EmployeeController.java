@@ -2,6 +2,7 @@ package lk.ijse.javafx.bakerymanagementsystem.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,7 +16,13 @@ public class EmployeeController {
     private AnchorPane ancEmployee;
 
     @FXML
+    private TableColumn<?, ?> colAddress;
+
+    @FXML
     private TableColumn<?, ?> colContactNo;
+
+    @FXML
+    private TableColumn<?, ?> colDateOfBirth;
 
     @FXML
     private TableColumn<?, ?> colEmail;
@@ -33,7 +40,10 @@ public class EmployeeController {
     private TableColumn<?, ?> colSalary;
 
     @FXML
-    private TableColumn<?, ?> colid;
+    private TableColumn<?, ?> colWorkShift;
+
+    @FXML
+    private TableColumn<?, ?> colId;
 
     @FXML
     private Label lblId;
@@ -42,13 +52,13 @@ public class EmployeeController {
     private TableView<?> tblEmployee;
 
     @FXML
+    private TextField txtAddress;
+
+    @FXML
     private TextField txtContactNo;
 
     @FXML
     private TextField txtEmail;
-
-    @FXML
-    private TextField txtHireDate;
 
     @FXML
     private TextField txtName;
@@ -58,6 +68,15 @@ public class EmployeeController {
 
     @FXML
     private TextField txtSalary;
+
+    @FXML
+    private TextField txtWorkShift;
+
+    @FXML
+    private DatePicker txtDateOfBirth;
+
+    @FXML
+    private DatePicker txtHireDate;
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {

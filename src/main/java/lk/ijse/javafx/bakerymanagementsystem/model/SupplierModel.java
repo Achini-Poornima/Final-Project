@@ -49,7 +49,7 @@ public class SupplierModel {
     }
 
     public boolean deleteUser(String supplierId) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM Supplier WHERE supplier_id";
+        String sql = "DELETE FROM Supplier WHERE supplier_id=?";
         return CrudUtil.execute(sql,supplierId);
     }
 }

@@ -18,9 +18,6 @@ public class PaymentController {
     private TableColumn<?, ?> colAmount;
 
     @FXML
-    private TableColumn<?, ?> colAttribute;
-
-    @FXML
     private TableColumn<?, ?> colOrderId;
 
     @FXML
@@ -34,12 +31,6 @@ public class PaymentController {
 
     @FXML
     private TextField txtAmount;
-
-    @FXML
-    private TextField txtAttribute;
-
-    @FXML
-    private TextField txtOrderId;
 
     @FXML
     private TextField txtPaymentMethod;

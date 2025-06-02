@@ -1,4 +1,19 @@
 package lk.ijse.javafx.bakerymanagementsystem.Dto;
 
-public class IngredientDto {
+import lombok.*;
+
+import java.sql.Date;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+class IngredientDto {
+    private String ingredientId;
+    private String name;
+    private Date expireDate;
+    private Double quantityAvailable;
+    private String supplierId;
 }

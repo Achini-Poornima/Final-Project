@@ -2,15 +2,12 @@ package lk.ijse.javafx.bakerymanagementsystem.Dto;
 
 import lombok.*;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@Setter
+@NoArgsConstructor
 @Getter
-@ToString
-public class InventoryDto {
-    private String invetoryId;
-    private int stockQuantity;
-    private String lastUpdate;
+@Setter
+public class ProductDetailDto {
     private String productId;
+    private double quantityUsed;
     private String ingredientId;
 }
