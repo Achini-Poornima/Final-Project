@@ -1,9 +1,11 @@
 package lk.ijse.javafx.bakerymanagementsystem.Dto.TM;
 
+import javafx.scene.control.Button;
 import lombok.*;
 
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class CartTM {
@@ -12,10 +14,8 @@ public class CartTM {
     private String productName;
     private int quantity;
     private double price;
-    public CartTM(String productId, String productName, int quantity, double price){
-        this.productId = productId;
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
-    }
+    private double total;
+    private Button btnRemove;
+
+
 }

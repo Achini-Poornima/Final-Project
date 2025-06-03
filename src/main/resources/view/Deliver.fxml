@@ -67,7 +67,7 @@
             </HBox>
             <TableView fx:id="tblDeliver" onMouseClicked="#setData" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colid" prefWidth="75.0" text="Deliver Id" />
+                  <TableColumn fx:id="colId" prefWidth="75.0" text="Deliver Id" />
                   <TableColumn fx:id="colDeliverAddress" prefWidth="75.0" text="Deliver Address" />
                   <TableColumn fx:id="colDeliverCharge" prefWidth="75.0" text="Deliver Charge" />
                   <TableColumn fx:id="colDeliverDate" prefWidth="75.0" text="Deliver Date" />

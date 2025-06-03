@@ -1,11 +1,15 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
+import lk.ijse.javafx.bakerymanagementsystem.DBConnection.DbConnection;
+import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDto;
 import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class OrderModel {
+    private final OrderDetailsModel orderDetailsModel=new OrderDetailsModel();
     public String getNextOrderId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT order_id FROM Orders ORDER BY order_id DESC limit 1");
         char tableChar = 'O';
@@ -18,5 +22,28 @@ public class OrderModel {
             return nextIdString;
         }
         return tableChar + "001";
+    }
+
+    public boolean placeOrder(OrderDto orderDTO) throws SQLException, ClassNotFoundException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+            boolean isSaved = CrudUtil.execute("INSERT INTO Orders(order_id, customer_id, order_date, payment_status) VALUES (?,?,?,?)",orderDTO.getOrderId(),orderDTO.getCustomerId(),orderDTO.getOrderDate(),orderDTO.getPaymentStatus());
+            if(isSaved){
+                boolean isOderSaved =  orderDetailsModel.saveOrderDetailsList(orderDTO.getCartList());
+                if(isOderSaved){
+                    connection.commit();
+                    return true;
+                }
+            }
+            connection.rollback();
+            return false;
+        }catch (Exception e){
+            connection.rollback();
+            e.printStackTrace();
+            return false;
+        }finally {
+            connection.setAutoCommit(true);
+        }
     }
 }

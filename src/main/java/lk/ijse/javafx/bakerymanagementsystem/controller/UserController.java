@@ -72,12 +72,6 @@ public class UserController implements Initializable {
 
         UserDto userDto = createUserDtoFromInputs();
 
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want to save this User?");
-
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 boolean isAdded = userModel.saveUser(userDto);
                 if (isAdded) {
@@ -96,7 +90,6 @@ public class UserController implements Initializable {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Unexpected error occurred while adding the user!").show();
             }
-        }
     }
 
     @FXML

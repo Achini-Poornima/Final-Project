@@ -2,6 +2,8 @@ package lk.ijse.javafx.bakerymanagementsystem.Dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -10,7 +12,12 @@ import lombok.*;
 public class InventoryDto {
     private String invetoryId;
     private int stockQuantity;
-    private String lastUpdate;
     private String productId;
     private String ingredientId;
+
+    public InventoryDto(String invetoryId, String productId, int stockQuantity) {
+        this.invetoryId = invetoryId;
+        this.productId = productId;
+        this.stockQuantity = stockQuantity;
+    }
 }

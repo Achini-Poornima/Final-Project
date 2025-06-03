@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 public class OrderDetailsDto {
     private String orderId;
-    private double price;
-    private int quantity;
     private String productId;
+    private int quantity;
+    private double price;
 }

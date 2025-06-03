@@ -12,9 +12,8 @@ import java.util.ArrayList;
 @Getter
 public class OrderDto {
     private String orderId;
-    private double totalAmount;
+    private String customerId;
     private LocalDateTime orderDate;
     private String paymentStatus;
-    private String customerId;
     private ArrayList<OrderDetailsDto> cartList;
 }

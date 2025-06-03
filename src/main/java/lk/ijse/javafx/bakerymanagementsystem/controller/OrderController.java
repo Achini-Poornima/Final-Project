@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDetailsDto;
+import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.ProductDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.TM.CartTM;
 import lk.ijse.javafx.bakerymanagementsystem.model.CustomerModel;
@@ -15,8 +17,11 @@ import lk.ijse.javafx.bakerymanagementsystem.model.OrderModel;
 import lk.ijse.javafx.bakerymanagementsystem.model.ProductModel;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class OrderController implements Initializable {
@@ -83,32 +88,47 @@ public class OrderController implements Initializable {
         private final ObservableList<CartTM> cartData = FXCollections.observableArrayList();
 
         @FXML
-        void btnAddToCartOnAction(ActionEvent event) {
-                String selectedProductIds = cmbProductId.getValue();
+          void btnAddToCartOnAction(ActionEvent event) {
+                String productId = cmbProductId.getValue();
                 String cartQtyString = txtAddToCartQty.getText();
 
-                if (selectedProductIds == null){
-                        new Alert(Alert.AlertType.WARNING,"Please select item..").show();
+                if (productId == null) {
+                        new Alert(
+                                Alert.AlertType.WARNING,
+                                "Please select item..!"
+                        ).show();
                         return;
                 }
 
                 if (!cartQtyString.matches("^[0-9]+$")) {
-                        new Alert(Alert.AlertType.WARNING, "Please enter valid quantity..!").show();
+                        new Alert(
+                                Alert.AlertType.WARNING,
+                                "Please enter valid quantity..!"
+                        ).show();
                         return;
                 }
+
                 int cartQty = Integer.parseInt(cartQtyString);
                 int itemStockQty = Integer.parseInt(lblItemQty.getText());
 
-                if (itemStockQty < cartQty){
-                        new Alert(Alert.AlertType.WARNING, "Not enough stock quantity available..!").show();
+                // 10 < 15
+                if (itemStockQty < cartQty) {
+                        new Alert(
+                                Alert.AlertType.WARNING,
+                                "Not enough item quantity..!"
+                        ).show();
                         return;
                 }
-                String itemName = lblItemName.getText();
-                double itemUnitPrice = Double.parseDouble(lblItemPrice.getText());
+
+                String productName = lblItemName.getText();
+                double price = Double.parseDouble(lblItemPrice.getText());
+                double total = price * cartQty;
 
                 for (CartTM cartTM : cartData) {
-                        if (cartTM.getProductId().equals(selectedProductIds)) {
-                                int newQty = cartTM.getCartQty() + cartQty;
+                        if (cartTM.getProductId().equals(productId)) {
+                                // 20 + 10
+                                int newQty = cartTM.getQuantity() + cartQty;
+
                                 if (itemStockQty < newQty) {
                                         new Alert(
                                                 Alert.AlertType.WARNING,
@@ -116,14 +136,94 @@ public class OrderController implements Initializable {
                                         ).show();
                                         return;
                                 }
+
                                 cartTM.setQuantity(newQty);
-                                cartTM.setTotal(newQty * itemUnitPrice);
+                                cartTM.setTotal(newQty * price);
+
+                                txtAddToCartQty.setText("");
+                                tblCart.refresh();
+
+                                return;
                         }
                 }
-        }
+
+                Button removeBtn = new Button("Remove");
+                CartTM cartTM = new CartTM(
+                        productId,
+                        productName,
+                        cartQty,
+                        price,
+                        total,
+                        removeBtn
+                );
+
+                removeBtn.setOnAction(action -> {
+                        cartData.remove(cartTM);
+                        tblCart.refresh();
+                });
+
+                txtAddToCartQty.setText("");
+                cartData.add(cartTM);
+
+                }
 
         @FXML
         void btnPlaceOrderOnAction(ActionEvent event) {
+            if (tblCart.getItems().isEmpty()) {
+                new Alert(
+                        Alert.AlertType.WARNING,
+                        "Please add items to cart..!"
+                ).show();
+                return;
+            }
+
+            if (cmbCustomerId.getValue().isEmpty()) {
+                new Alert(
+                        Alert.AlertType.WARNING,
+                        "Please select customer for place order..!"
+                ).show();
+                return;
+            }
+
+            String selectedCustomerId = cmbCustomerId.getValue();
+            String orderId = lblOrderId.getText();
+            LocalDateTime date = LocalDateTime.now();
+            String paymentStatus=cmbPay.getValue();
+
+
+            ArrayList<OrderDetailsDto> cartList = new ArrayList<>();
+
+            for (CartTM cartTM : cartData) {
+                OrderDetailsDto orderDetailsDTO = new OrderDetailsDto(
+                        orderId,
+                        cartTM.getProductId(),
+                        cartTM.getQuantity(),
+                        cartTM.getPrice()
+                );
+                cartList.add(orderDetailsDTO);
+            }
+
+            OrderDto orderDTO = new OrderDto(
+                    orderId,
+                    selectedCustomerId,
+                    date,
+                    paymentStatus,
+                    cartList
+            );
+
+            try {
+                boolean isPlaced = orderModel.placeOrder(orderDTO);
+
+                if (isPlaced) {
+                     new Alert(Alert.AlertType.INFORMATION, "Place order successful!").show();
+                    resetPage();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Fail to place order..!").show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Fail to place order..!").show();
+            }
 
         }
 
@@ -151,10 +251,10 @@ public class OrderController implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
-                colName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-                colQuantity.setCellValueFactory(new PropertyValueFactory<>("cartQty"));
-                colPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+                colItemId.setCellValueFactory(new PropertyValueFactory<>("productId"));
+                colName.setCellValueFactory(new PropertyValueFactory<>("productName"));
+                colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+                colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
                 colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
                 colAction.setCellValueFactory(new PropertyValueFactory<>("btnRemove"));
 
@@ -172,6 +272,11 @@ public class OrderController implements Initializable {
                 }        }
 
         private void resetPage() throws SQLException, ClassNotFoundException {
+            lblItemName.setText("");
+            lblItemPrice.setText("");
+            lblItemQty.setText("");
+            lblCustomerName.setText("");
+            cmbPay.setValue(null);
                 lblOrderId.setText(orderModel.getNextOrderId());
                 orderDate.setText(LocalDate.now().toString());
                 loadCustomerIds();

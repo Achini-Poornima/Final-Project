@@ -17,6 +17,6 @@ public class EmployeeDto {
     private String contactNo;
     private String email;
     private double salary;
-    private LocalDateTime hireDate;
+    private LocalDateTime joinDate;
     private String role;
 }

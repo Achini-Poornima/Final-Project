@@ -1,5 +1,6 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
+import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDetailsDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.ProductDto;
 import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
 
@@ -47,5 +48,10 @@ public class ProductModel {
             );
         }
         return null;
+    }
+
+    public boolean reduceqty(OrderDetailsDto orderDetailsDTO) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE Product SET stock_quantity=stock_quantity-? WHERE product_id=?";
+        return CrudUtil.execute(sql, orderDetailsDTO.getQuantity(), orderDetailsDTO.getProductId());
     }
 }

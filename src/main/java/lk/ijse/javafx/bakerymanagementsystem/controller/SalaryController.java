@@ -114,14 +114,8 @@ public class SalaryController implements Initializable {
     void btnSaveOnAction(ActionEvent event) {
         if (!validDateInputs()) return;
 
-        SalaryDto SalaryDto = createUserDtoFromInputs();
+        SalaryDto SalaryDto = createSalaryDtoFromInputs();
 
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want to save this Salary Details ?");
-
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 boolean isAdded = salaryModel.saveSalary(SalaryDto);
                 if (isAdded) {
@@ -140,10 +134,9 @@ public class SalaryController implements Initializable {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Unexpected error occurred while adding the Salary!").show();
             }
-        }
     }
 
-    private SalaryDto createUserDtoFromInputs() {
+    private SalaryDto createSalaryDtoFromInputs() {
         return new SalaryDto(
                 lblId.getText(),
                 Double.parseDouble(txtBasicSalary.getText()),
@@ -159,9 +152,9 @@ public class SalaryController implements Initializable {
         double bonus = Double.parseDouble(txtBonus.getText().trim());
         double netSalary = Double.parseDouble(txtNetSalary.getText().trim());
         String paymentDate = String.valueOf(txtPaymentDate.getValue());
-        String employeeid = txtEmployeeId.getValue().trim();
+        String employeeId = txtEmployeeId.getValue().trim();
 
-        if (basicSalary <= 0 || bonus < 0 || netSalary <= 0 || paymentDate.isEmpty() || employeeid.isEmpty()) {
+        if (basicSalary <= 0 || bonus < 0 || netSalary <= 0 || paymentDate.isEmpty() || employeeId.isEmpty()) {
             new Alert(Alert.AlertType.WARNING, "Please fill all the fields correctly!").show();
             return false;
         }
@@ -172,14 +165,7 @@ public class SalaryController implements Initializable {
     void btnUpdateOnAction(ActionEvent event) {
         if (!validDateInputs()) return;
 
-        SalaryDto salaryDto = createUserDtoFromInputs();
-
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want to update this Salary Details?");
-
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+        SalaryDto salaryDto = createSalaryDtoFromInputs();
             try {
                 boolean isUpdated = salaryModel.updateUser(salaryDto);
                 if (isUpdated) {
@@ -196,7 +182,6 @@ public class SalaryController implements Initializable {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-        }
     }
 
     @FXML

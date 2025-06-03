@@ -39,7 +39,7 @@ public class DeliverController implements Initializable {
     private TableColumn<DeliverDto,String> colOrderId;
 
     @FXML
-    private TableColumn<DeliverDto,String> colid;
+    private TableColumn<DeliverDto,String> colId;
 
     @FXML
     private Label lblId;
@@ -52,8 +52,6 @@ public class DeliverController implements Initializable {
 
     @FXML
     private TextField txtDeliverCharge;
-
-
 
     @FXML
     private ComboBox<String> txtOrderId;
@@ -106,13 +104,6 @@ public class DeliverController implements Initializable {
         if (validDataInputs()) return;
 
         DeliverDto deliverDto = createDeliverDtoFromInputs();
-
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want Save this Deliver.");
-
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK){
             try {
                 boolean isAdded = deliverModel.saveDliver(deliverDto);
                 if (isAdded){
@@ -131,7 +122,6 @@ public class DeliverController implements Initializable {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Unexpected error occurred while adding the user!").show();
             }
-        }
     }
 
     private DeliverDto createDeliverDtoFromInputs() {
@@ -174,12 +164,6 @@ public class DeliverController implements Initializable {
 
         DeliverDto deliverDto = createDeliverDtoFromInputs();
 
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want to update this User?");
-
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 boolean isUpdated = deliverModel.updateDeliver(deliverDto);
                 if (isUpdated) {
@@ -196,7 +180,6 @@ public class DeliverController implements Initializable {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-        }
     }
 
     @FXML
@@ -235,7 +218,7 @@ public class DeliverController implements Initializable {
     }
 
     private void loadTable() throws SQLException, ClassNotFoundException {
-        colid.setCellValueFactory(new PropertyValueFactory<>("deliverId"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("deliverId"));
         colDeliverAddress.setCellValueFactory(new PropertyValueFactory<>("deliverAddress"));
         colDeliverCharge.setCellValueFactory(new PropertyValueFactory<>("deliverCharge"));
         colDeliverDate.setCellValueFactory(new PropertyValueFactory<>("deliverDate"));

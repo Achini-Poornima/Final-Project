@@ -14,6 +14,13 @@ import lombok.*;
 public class ExpensesDto {
     private String expensesId;
     private String category;
-    private BigDecimal amount;
-    private LocalDate date;
+    private double amount;
+    private String date;
+
+    public ExpensesDto(String trim, String trim1, double amount, LocalDate now) {
+        this.expensesId = trim;
+        this.category = trim1;
+        this.amount = amount;
+        this.date = now.toString();
+    }
 }

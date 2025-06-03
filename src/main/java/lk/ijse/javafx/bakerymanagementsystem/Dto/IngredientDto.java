@@ -3,6 +3,7 @@ package lk.ijse.javafx.bakerymanagementsystem.Dto;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -10,10 +11,10 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-class IngredientDto {
+public class IngredientDto {
     private String ingredientId;
     private String name;
-    private Date expireDate;
-    private Double quantityAvailable;
+    private String expireDate;
+    private double quantityAvailable;
     private String supplierId;
 }

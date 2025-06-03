@@ -2,14 +2,9 @@ package lk.ijse.javafx.bakerymanagementsystem.model;
 
 import lk.ijse.javafx.bakerymanagementsystem.Dto.DeliverDto;
 import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 public class DeliverModel {
 
     public static ArrayList<DeliverDto> getAllDelivers() throws SQLException, ClassNotFoundException {
@@ -58,13 +53,10 @@ public class DeliverModel {
 
     public ArrayList<String> getTodayOrderIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> orderIds = new ArrayList<>();
-
         ResultSet rs = CrudUtil.execute("SELECT order_id FROM Orders WHERE DATE(order_date) = CURDATE()");
-
         while (rs.next()) {
             orderIds.add(rs.getString("order_id"));
         }
-
         return orderIds;
     }
 
