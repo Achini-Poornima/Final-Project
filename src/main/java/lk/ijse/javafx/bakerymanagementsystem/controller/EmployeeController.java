@@ -37,13 +37,7 @@ public class EmployeeController {
     private TableColumn<?, ?> colRole;
 
     @FXML
-    private TableColumn<?, ?> colSalary;
-
-    @FXML
-    private TableColumn<?, ?> colWorkShift;
-
-    @FXML
-    private TableColumn<?, ?> colId;
+    private TableColumn<?, ?> colid;
 
     @FXML
     private Label lblId;
@@ -58,25 +52,19 @@ public class EmployeeController {
     private TextField txtContactNo;
 
     @FXML
+    private DatePicker txtDateOfBirth;
+
+    @FXML
     private TextField txtEmail;
+
+    @FXML
+    private DatePicker txtJoinDate;
 
     @FXML
     private TextField txtName;
 
     @FXML
     private TextField txtRole;
-
-    @FXML
-    private TextField txtSalary;
-
-    @FXML
-    private TextField txtWorkShift;
-
-    @FXML
-    private DatePicker txtDateOfBirth;
-
-    @FXML
-    private DatePicker txtHireDate;
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {

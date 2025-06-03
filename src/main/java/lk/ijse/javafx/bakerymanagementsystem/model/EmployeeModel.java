@@ -19,7 +19,7 @@ public class EmployeeModel {
                 employee.getContactNo(),
                 employee.getEmail(),
                 employee.getSalary(),
-                employee.getHireDate(),
+                employee.getJoinDate(),
                 employee.getRole()
         );
     }
@@ -32,7 +32,7 @@ public class EmployeeModel {
                 employee.getContactNo(),
                 employee.getEmail(),
                 employee.getSalary(),
-                employee.getHireDate(),
+                employee.getJoinDate(),
                 employee.getRole(),
                 employee.getEmployeeId()
         );

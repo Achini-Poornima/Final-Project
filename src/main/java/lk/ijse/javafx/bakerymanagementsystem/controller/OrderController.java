@@ -170,18 +170,12 @@ public class OrderController implements Initializable {
         @FXML
         void btnPlaceOrderOnAction(ActionEvent event) {
             if (tblCart.getItems().isEmpty()) {
-                new Alert(
-                        Alert.AlertType.WARNING,
-                        "Please add items to cart..!"
-                ).show();
+                new Alert(Alert.AlertType.WARNING, "Please add items to cart..!").show();
                 return;
             }
 
             if (cmbCustomerId.getValue().isEmpty()) {
-                new Alert(
-                        Alert.AlertType.WARNING,
-                        "Please select customer for place order..!"
-                ).show();
+                new Alert(Alert.AlertType.WARNING, "Please select customer for place order..!").show();
                 return;
             }
 
@@ -190,9 +184,7 @@ public class OrderController implements Initializable {
             LocalDateTime date = LocalDateTime.now();
             String paymentStatus=cmbPay.getValue();
 
-
             ArrayList<OrderDetailsDto> cartList = new ArrayList<>();
-
             for (CartTM cartTM : cartData) {
                 OrderDetailsDto orderDetailsDTO = new OrderDetailsDto(
                         orderId,
@@ -202,7 +194,6 @@ public class OrderController implements Initializable {
                 );
                 cartList.add(orderDetailsDTO);
             }
-
             OrderDto orderDTO = new OrderDto(
                     orderId,
                     selectedCustomerId,

@@ -22,50 +22,40 @@
                </font>
             </Label>
             <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox spacing="10.0" />
             <HBox prefHeight="31.0" prefWidth="1093.0" spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Employee Id" />
-                  <Label fx:id="lblId" prefHeight="27.0" prefWidth="132.0" style="-fx-background-color: fff; -fx-border-color: #0984e3; -fx-border-width: 0 0 2 0;" />
+                  <Label fx:id="lblId" prefHeight="27.0" prefWidth="375.0" style="-fx-background-color: fff; -fx-border-color: #0984e3; -fx-border-width: 0 0 2 0;" />
+                  <Label prefHeight="31.0" prefWidth="128.0" text="     Address" />
+                  <TextField fx:id="txtAddress" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="127.0" text="     Name" />
                   <TextField fx:id="txtName" prefHeight="35.0" prefWidth="378.0" style="-fx-border-color: #0984e3; -fx-background-color: ffff; -fx-border-width: 0 0 2 0;" />
-                  <Label prefHeight="39.0" prefWidth="127.0" text="     Work Shift" />
-                  <TextField fx:id="txtWorkShift" prefHeight="35.0" prefWidth="378.0" style="-fx-border-color: #0984e3; -fx-background-color: #fffff; -fx-border-width: 0 0 2 0;" />
-               </children>
-            </HBox>
-            <HBox spacing="10.0">
-               <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="     Address" />
-                  <TextField fx:id="txtAddress" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: fff; -fx-border-width: 0 0 2 0;" />
-                  <Label prefHeight="39.0" prefWidth="128.0" text="     Salary" />
-                  <TextField fx:id="txtSalary" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
-               </children>
-            </HBox>
-            <HBox spacing="10.0">
-               <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" text="     Date of Birth" />
-                  <DatePicker fx:id="txtDateOfBirth" prefHeight="35.0" prefWidth="376.0" />
-                  <Label prefHeight="39.0" prefWidth="128.0" text="     Hire Date" />
-                  <DatePicker fx:id="txtHireDate" prefHeight="35.0" prefWidth="376.0" />
+                  <Label prefHeight="39.0" prefWidth="128.0" text="     Join Date" />
+                  <DatePicker fx:id="txtJoinDate" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Contact No" />
                   <TextField fx:id="txtContactNo" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
-                  <Label prefHeight="39.0" prefWidth="128.0" text="     Role" />
-                  <TextField fx:id="txtRole" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
+                  <Label prefHeight="39.0" prefWidth="128.0" text="     Date of Birth" />
+                  <DatePicker fx:id="txtDateOfBirth" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Email" />
                   <TextField fx:id="txtEmail" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: ffff; -fx-border-width: 0 0 2 0;" />
+                  <Label prefHeight="39.0" prefWidth="128.0" text="     Role" />
+                  <TextField fx:id="txtRole" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
+            <HBox spacing="10.0" />
             <HBox spacing="10.0" />
             <HBox alignment="CENTER_RIGHT" spacing="70.0">
                <children>
@@ -95,9 +85,7 @@
                   <TableColumn fx:id="colDateOfBirth" prefWidth="75.0" text="Date Of Birth" />
                   <TableColumn fx:id="colContactNo" prefWidth="75.0" text="Conatact No" />
                   <TableColumn fx:id="colEmail" prefWidth="75.0" text="Email" />
-                  <TableColumn fx:id="colWorkShift" prefWidth="75.0" text="Work Shift" />
-                  <TableColumn fx:id="colSalary" prefWidth="75.0" text="Salary" />
-                  <TableColumn fx:id="colHireDate" prefWidth="75.0" text="Hire Date" />
+                  <TableColumn fx:id="colHireDate" prefWidth="75.0" text="Join Date" />
                   <TableColumn fx:id="colRole" prefWidth="75.0" text="Role" />
                </columns>
                <columnResizePolicy>
