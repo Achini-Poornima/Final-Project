@@ -4,10 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDetailsDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.ProductDto;
@@ -16,6 +21,7 @@ import lk.ijse.javafx.bakerymanagementsystem.model.CustomerModel;
 import lk.ijse.javafx.bakerymanagementsystem.model.OrderModel;
 import lk.ijse.javafx.bakerymanagementsystem.model.ProductModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -206,6 +212,7 @@ public class OrderController implements Initializable {
                 boolean isPlaced = orderModel.placeOrder(orderDTO);
 
                 if (isPlaced) {
+                    loadOrderPayment();
                      new Alert(Alert.AlertType.INFORMATION, "Place order successful!").show();
                     resetPage();
                 } else {
@@ -218,7 +225,15 @@ public class OrderController implements Initializable {
 
         }
 
-        @FXML
+    private void loadOrderPayment() throws IOException {
+        Parent rootNode = FXMLLoader.load(getClass().getResource("/view/OrderPayment.fxml"));
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(rootNode));
+        stage.show();
+    }
+
+    @FXML
         void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
              resetPage();
         }
