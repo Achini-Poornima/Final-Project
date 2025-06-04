@@ -13,11 +13,11 @@ public class PaymentModel {
         ArrayList<PaymentDto> paymentList = new ArrayList<>();
         while (resultSet.next()) {
             paymentList.add(new PaymentDto(
-                    resultSet.getString("paymentId"),
+                    resultSet.getString("payment_id"),
                     resultSet.getDouble("amount"),
-                    resultSet.getString("paymentMethod"),
-                    resultSet.getString("paymentDate"),
-                    resultSet.getString("orderId")
+                    resultSet.getString("payment_method"),
+                    resultSet.getString("payment_date"),
+                    resultSet.getString("order_id")
             ));
         }
         return paymentList;

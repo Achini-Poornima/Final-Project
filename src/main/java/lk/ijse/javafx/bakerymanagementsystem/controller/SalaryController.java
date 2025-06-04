@@ -232,7 +232,7 @@ public class SalaryController implements Initializable {
     }
 
 
-    private void loadEmployeeIds() {
+    private void loadEmployeeIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> employeeIds = employeeModel.getAllEmployeeIds();
         ObservableList<String> observableOrderIds = FXCollections.observableArrayList(employeeIds);
         txtEmployeeId.setItems(observableOrderIds);

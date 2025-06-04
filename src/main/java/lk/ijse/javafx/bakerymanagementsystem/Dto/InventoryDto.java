@@ -10,14 +10,9 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 public class InventoryDto {
-    private String invetoryId;
+    private String inventoryId;
     private int stockQuantity;
     private String productId;
     private String ingredientId;
 
-    public InventoryDto(String invetoryId, String productId, int stockQuantity) {
-        this.invetoryId = invetoryId;
-        this.productId = productId;
-        this.stockQuantity = stockQuantity;
-    }
 }

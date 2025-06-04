@@ -5,96 +5,100 @@ import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EmployeeModel {
 
-    public boolean saveEmployee(EmployeeDto employee) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO Employee (employee_id, name, contact_no, email, salary, hire_date, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        return CrudUtil.execute(
-                sql,
-                employee.getEmployeeId(),
-                employee.getName(),
-                employee.getContactNo(),
-                employee.getEmail(),
-                employee.getSalary(),
-                employee.getJoinDate(),
-                employee.getRole()
-        );
-    }
+    public static ArrayList<EmployeeDto> getAllEmployees() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Employee");
 
-    public boolean updateEmployee(EmployeeDto employee) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE Employee SET name=?, contact_no=?, email=?, salary=?, hire_date=?, role=? WHERE employee_id=?";
-        return CrudUtil.execute(
-                sql,
-                employee.getName(),
-                employee.getContactNo(),
-                employee.getEmail(),
-                employee.getSalary(),
-                employee.getJoinDate(),
-                employee.getRole(),
-                employee.getEmployeeId()
-        );
-    }
-
-    public boolean deleteEmployee(String employee_id) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM Employee WHERE employee_id=?";
-        return CrudUtil.execute(sql, employee_id);
-    }
-
-    public EmployeeDto getEmployee(String employee_id) {
-        String sql = "SELECT * FROM Employee WHERE employee_id=?";
-        try {
-            ResultSet rs = CrudUtil.execute(sql, employee_id);
-            if (rs.next()) {
-                return new EmployeeDto(
-                        rs.getString("employee_id"),
-                        rs.getString("name"),
-                        rs.getString("contact_no"),
-                        rs.getString("email"),
-                        rs.getDouble("salary"),
-                        rs.getTimestamp("hire_date").toLocalDateTime(),
-                        rs.getString("role")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Ideally log this
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-
-    public ArrayList<EmployeeDto> getAllEmployees() throws SQLException, ClassNotFoundException {
         ArrayList<EmployeeDto> list = new ArrayList<>();
-        String sql = "SELECT * FROM Employee";
-            ResultSet rs = CrudUtil.execute(sql);
-            while (rs.next()) {
-                list.add(new EmployeeDto(
-                        rs.getString("employee_id"),
-                        rs.getString("name"),
-                        rs.getString("contact_no"),
-                        rs.getString("email"),
-                        rs.getDouble("salary"),
-                        rs.getTimestamp("hire_date").toLocalDateTime(),
-                        rs.getString("role")
-                ));
-            }
+        while (rst.next()) {
+            EmployeeDto employeeDto = new EmployeeDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5),
+                    LocalDate.parse(rst.getString(6)),
+                    LocalDate.parse(rst.getString(7)),
+                    rst.getString(8)
+            );
+            list.add(employeeDto);
+        }
         return list;
     }
 
-    public ArrayList<String> getAllEmployeeIds() {
+    public String getNextId() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select employee_id from Employee order by employee_id desc limit 1");
+
+        char tableChr = 'E';
+
+        if (rst.next()){
+            String lastId = rst.getString(1);
+            String lastIdNumberString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumberString);
+            int nextIdNum = lastIdNumber + 1;
+            String nextIdString = String.format(tableChr + "%03d", nextIdNum);
+            return nextIdString;
+        }
+
+        return "E001";
+    }
+
+    public boolean saveEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("insert into Employee values (?,?,?,?,?,?,?,?)",
+                employeeDto.getEmployeeId(),
+                employeeDto.getName(),
+                employeeDto.getContactNo(),
+                employeeDto.getEmail(),
+                employeeDto.getAddress(),
+                employeeDto.getJoinDate().toString(),
+                employeeDto.getDateOfBirth().toString(),
+                employeeDto.getRole()
+        );
+    }
+
+    public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("delete from Employee where employee_id = ?", employeeId);
+    }
+
+    public boolean updateEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("update Employee set name = ?, contact_no = ?, email = ?, address = ?, join_date = ?, date_of_birth = ?, role = ? where employee_id = ?",
+                employeeDto.getName(),
+                employeeDto.getContactNo(),
+                employeeDto.getEmail(),
+                employeeDto.getAddress(),
+                employeeDto.getJoinDate().toString(),
+                employeeDto.getDateOfBirth().toString(),
+                employeeDto.getRole(),
+                employeeDto.getEmployeeId());
+    }
+
+    public ArrayList<String> getAllEmployeeIds() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute(
+                "select employee_id from Employee"
+        );
+
         ArrayList<String> list = new ArrayList<>();
-        String sql = "SELECT employee_id FROM Employee";
-        try {
-            ResultSet rs = CrudUtil.execute(sql);
-            while (rs.next()) {
-                list.add(rs.getString("employee_id"));
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        while (rst.next()) {
+            String id = rst.getString(1);
+            list.add(id);
         }
         return list;
+    }
+
+    public String findNameById(String employeeId) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute(
+                "select name from Employee where employee_id=?",
+                employeeId
+        );
+        if (rst.next()) {
+            return rst.getString(1);
+        }
+        return "";
     }
 }

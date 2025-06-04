@@ -62,7 +62,7 @@ public class InventoryController implements Initializable {
         Optional<ButtonType> result = confirmationAlert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                boolean isDeleted = inventoryModel.deleteInventory(selectedInventory.getInvetoryId());
+                boolean isDeleted = inventoryModel.deleteInventory(selectedInventory.getInventoryId());
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Inventory Details deleted successfully!").show();
                     loadTable();
@@ -141,16 +141,17 @@ public class InventoryController implements Initializable {
 
     private InventoryDto createInventoryDtoFromInputs() {
         return new InventoryDto(
+                lblId.getText(),
+                Integer.parseInt(txtStockQuantity.getText()),
                 txtProductId.getValue(),
-                txtIngredientId.getValue(),
-                Integer.parseInt(txtStockQuantity.getText()));
+                txtIngredientId.getValue());
     }
 
         @FXML
     void onSetData(MouseEvent event) {
         InventoryDto inventoryDto = tblInventory.getSelectionModel().getSelectedItem();
         if (inventoryDto != null){
-            lblId.setText(inventoryDto.getInvetoryId());
+            lblId.setText(inventoryDto.getInventoryId());
             txtStockQuantity.setText(String.valueOf(inventoryDto.getStockQuantity()));
             txtProductId.setValue(inventoryDto.getProductId());
             txtIngredientId.setValue(inventoryDto.getIngredientId());
@@ -175,7 +176,7 @@ public class InventoryController implements Initializable {
         try {
             ArrayList<String> ingredientIds = inventoryModel.getIngredientIds();
             ObservableList<String> observableIngredientIds = FXCollections.observableArrayList(ingredientIds);
-            txtProductId.setItems(observableIngredientIds);
+            txtIngredientId.setItems(observableIngredientIds);
         }catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load today's order IDs.").show();

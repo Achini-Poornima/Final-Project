@@ -215,7 +215,7 @@ public class PaymentController implements Initializable {
         loadNextId();
         txtAmount.clear();
         txtPaymentMethod.clear();
-        txtPaymentDate.getEditor().clear();
+        txtPaymentDate.setValue(null);
         txtOrderId.getSelectionModel().clearSelection();
     }
 

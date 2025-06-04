@@ -22,34 +22,37 @@ public class InventoryModel {
         return inventoryDtos;
     }
 
-    public boolean deleteInventory(String invetoryId) throws SQLException, ClassNotFoundException {
+    public boolean deleteInventory(String inventoryId) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM Inventory WHERE inventory_id = ?";
-        return CrudUtil.execute(sql,invetoryId);
+        return CrudUtil.execute(sql,inventoryId);
     }
 
     public boolean updateInventory(InventoryDto inventoryDto) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE Inventory SET product_id = ?, stock_quantity = ? WHERE inventory_id = ?";
-        return CrudUtil.execute(sql, inventoryDto.getProductId(), inventoryDto.getStockQuantity(), inventoryDto.getInvetoryId());
+        String sql = "UPDATE Inventory SET  stock_quantity = ?, product_id = ?,  ingredient_id=? WHERE inventory_id = ?";
+        return CrudUtil.execute(sql,  inventoryDto.getStockQuantity(), inventoryDto.getProductId(),inventoryDto.getIngredientId(), inventoryDto.getInventoryId());
     }
 
     public boolean saveInventory(InventoryDto inventoryDto) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO Inventory (inventory_id, product_id, stock_quantity) VALUES (?, ?, ?)";
-        return CrudUtil.execute(sql, inventoryDto.getInvetoryId(), inventoryDto.getProductId(), inventoryDto.getStockQuantity());
+        String sql = "INSERT INTO Inventory VALUES (?,?,?, ?)";
+        return CrudUtil.execute(sql, inventoryDto.getInventoryId(), inventoryDto.getStockQuantity(), inventoryDto.getProductId(),inventoryDto.getIngredientId());
     }
 
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT inventory_id FROM Inventory ORDER BY inventory_id desc limit 1");
-        char tableChar = 'I';
-        if (resultSet.next()){
+        ResultSet resultSet = CrudUtil.execute("SELECT inventory_id FROM Inventory ORDER BY inventory_id DESC LIMIT 1");
+        String prefix = "IN";
+
+        if (resultSet.next()) {
             String lastId = resultSet.getString(1);
-            String lastIdNUmberString = lastId.substring(1);
-            int lastIdNumber = Integer.parseInt(lastIdNUmberString);
+            String numericPart = lastId.substring(prefix.length()); // e.g., "005"
+
+            int lastIdNumber = Integer.parseInt(numericPart);
             int nextIdNumber = lastIdNumber + 1;
-            String nextIdString = String.format(tableChar + "%03d", nextIdNumber);
-            return nextIdString;
+            return String.format("%s%03d", prefix, nextIdNumber);
         }
-        return tableChar + "001";
+
+        return prefix + "001";
     }
+
 
     public ArrayList<String> getProductIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> productIds = new ArrayList<>();

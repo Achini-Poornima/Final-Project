@@ -53,7 +53,7 @@ public class IngredientModel {
     }
 
     public boolean saveIngredient(IngredientDto ingredientDto) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO Ingredient VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Ingredient VALUES (?,?,?,?,?)";
         return CrudUtil.execute(sql, ingredientDto.getIngredientId(), ingredientDto.getName(), ingredientDto.getExpireDate(), ingredientDto.getQuantityAvailable(), ingredientDto.getSupplierId());
     }
 

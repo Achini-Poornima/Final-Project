@@ -2,8 +2,9 @@ package lk.ijse.javafx.bakerymanagementsystem.Dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +17,10 @@ public class EmployeeDto {
     private String name;
     private String contactNo;
     private String email;
-    private double salary;
-    private LocalDateTime joinDate;
+    private String address;
+    private LocalDate joinDate;
+    private LocalDate dateOfBirth;
     private String role;
+
+
 }
