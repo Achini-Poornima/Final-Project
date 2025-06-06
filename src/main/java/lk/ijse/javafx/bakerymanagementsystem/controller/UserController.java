@@ -53,9 +53,8 @@ public class UserController implements Initializable {
     private TextField txtUserName;
 
     private final UserModel userModel = new UserModel();
-    private final String usernamePattern = "^[a-zA-Z][a-zA-Z0-9_]{4,19}$\n";
-    private final String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[!@#$%^&*()\\-+])[A-Za-z\\\\d!@#$%^&*()\\-+]{8,}$\n";
-
+    private final String usernamePattern = "^[a-zA-Z][a-zA-Z0-9_]{4,19}$";
+    private final String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()\\-+])[A-Za-z\\d!@#$%^&*()\\-+]{8,}$";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,24 +74,24 @@ public class UserController implements Initializable {
 
         UserDto userDto = createUserDtoFromInputs();
 
-            try {
-                boolean isAdded = userModel.saveUser(userDto);
-                if (isAdded) {
-                    new Alert(Alert.AlertType.INFORMATION, "User added successfully!").show();
-                    loadTable();
-                    resetPage();
-                    loadNextId();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Failed to add User!").show();
-                }
-            } catch (SQLIntegrityConstraintViolationException e) {
-                new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage()).show();
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Unexpected error occurred while adding the user!").show();
+        try {
+            boolean isAdded = userModel.saveUser(userDto);
+            if (isAdded) {
+                new Alert(Alert.AlertType.INFORMATION, "User added successfully!").show();
+                loadTable();
+                resetPage();
+                loadNextId();
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Failed to add User!").show();
             }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage()).show();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Unexpected error occurred while adding the user!").show();
+        }
     }
 
     @FXML
@@ -117,11 +116,9 @@ public class UserController implements Initializable {
                 } else {
                     new Alert(Alert.AlertType.WARNING, "Failed to update User!").show();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
             }
         }
     }
@@ -166,7 +163,8 @@ public class UserController implements Initializable {
         }
     }
 
-    public void setData(MouseEvent mouseEvent) {
+    @FXML
+    void tblUserOnMouseClicked(MouseEvent event) {
         UserDto userDto = tblUser.getSelectionModel().getSelectedItem();
         if (userDto != null) {
             lblId.setText(userDto.getUserId());
@@ -181,6 +179,9 @@ public class UserController implements Initializable {
         txtUserName.clear();
         txtPassword.clear();
         txtRole.clear();
+        txtUserName.setStyle("");
+        txtPassword.setStyle("");
+        txtRole.setStyle("");
         tblUser.getSelectionModel().clearSelection();
     }
 
@@ -196,12 +197,11 @@ public class UserController implements Initializable {
 
         try {
             ArrayList<UserDto> users = userModel.getAllUsers();
+            ObservableList<UserDto> userList = FXCollections.observableArrayList();
             if (users != null && !users.isEmpty()) {
-                ObservableList<UserDto> userList = FXCollections.observableArrayList(users);
-                tblUser.setItems(userList);
-            } else {
-                tblUser.setItems(FXCollections.observableArrayList());
+                userList.addAll(users);
             }
+            tblUser.setItems(userList);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load users.").show();
@@ -218,16 +218,17 @@ public class UserController implements Initializable {
 
         txtUserName.setStyle("");
         txtPassword.setStyle("");
+        txtRole.setStyle("");
 
-        if(!isValidUsername){
+        if (!isValidUsername) {
             txtUserName.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-        if(role.isEmpty()){
+        if (role.isEmpty()) {
             txtRole.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-        if(!isValidPassword){
+        if (!isValidPassword) {
             txtPassword.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }

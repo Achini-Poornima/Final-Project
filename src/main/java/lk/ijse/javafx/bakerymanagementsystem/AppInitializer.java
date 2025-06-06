@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class AppInitializer extends Application {
@@ -35,6 +36,9 @@ public class AppInitializer extends Application {
         });
 
         new Thread(loadingTask).start();
+
+        Image img = new Image(getClass().getResource("/assets/images/login-bg.jpeg").toExternalForm());
+        System.out.println("Loaded: " + !img.isError());
 
     }
 }
