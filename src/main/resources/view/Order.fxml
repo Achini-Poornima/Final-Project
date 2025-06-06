@@ -23,6 +23,11 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <Label fx:id="lblOrderId1" maxWidth="500.0" prefHeight="14.0" prefWidth="500.0">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Label>
             <VBox prefHeight="251.0" prefWidth="1137.0" spacing="20.0" style="-fx-border-color: #0984e3; -fx-border-width: 2; -fx-border-radius: 7;">
                <children>
                   <HBox alignment="CENTER_RIGHT" spacing="30.0">
@@ -198,6 +203,11 @@
                   </HBox>
                </children>
             </VBox>
+            <Label fx:id="lblOrderId12" maxWidth="500.0" prefHeight="14.0" prefWidth="500.0">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Label>
             <TableView fx:id="tblCart" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colItemId" prefWidth="75.0" text="Item Id" />
@@ -211,6 +221,11 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Label fx:id="lblOrderId13" maxWidth="500.0" prefHeight="14.0" prefWidth="500.0">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Label>
             <HBox alignment="CENTER_RIGHT" spacing="30.0">
                <children>
                   <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnResetOnAction" prefWidth="80.0" style="-fx-background-color: #e74c3c;" text="Reset" textFill="WHITE" HBox.hgrow="ALWAYS">
@@ -231,6 +246,11 @@
                   </Button>
                </children>
             </HBox>
+            <Label fx:id="lblOrderId11" maxWidth="500.0" prefHeight="14.0" prefWidth="500.0">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Label>
          </children>
          <padding>
             <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

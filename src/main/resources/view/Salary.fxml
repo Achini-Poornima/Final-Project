@@ -13,15 +13,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancSalary" prefHeight="800.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.SalaryController">
+<AnchorPane fx:id="ancSalary" prefHeight="673.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.SalaryController">
     <children>
         <VBox layoutX="40.0" layoutY="27.0" prefHeight="900.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
+            <Label prefHeight="39.0" prefWidth="128.0" />
                 <Label text="Salary Manage" textFill="#150c65">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
+            <Label prefHeight="39.0" prefWidth="128.0" />
                 <HBox prefHeight="40.0" prefWidth="560.0" spacing="10.0">
                     <children>
                         <Label prefHeight="39.0" prefWidth="128.0" text="     Salary Id" />
@@ -31,7 +33,7 @@
                 <HBox spacing="10.0">
                     <children>
                         <Label prefHeight="39.0" prefWidth="127.0" text="     Basic Salary" />
-                        <TextField fx:id="txtBasicSalary" onKeyReleased="#setSalary" prefHeight="40.0" prefWidth="378.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
+                        <TextField fx:id="txtBasicSalary" onKeyReleased="#setSalary" prefHeight="40.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
                     </children>
                 </HBox>
                 <HBox spacing="10.0">
@@ -43,21 +45,22 @@
                 <HBox spacing="10.0">
                     <children>
                         <Label prefHeight="39.0" prefWidth="128.0" text="     Net Salary" />
-                  <Label fx:id="txtNetSalary" prefHeight="40.0" prefWidth="378.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
+                  <Label fx:id="txtNetSalary" prefHeight="40.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
                     </children>
                 </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     Payment Date" />
-                  <DatePicker fx:id="txtPaymentDate" prefHeight="40.0" prefWidth="378.0" style="-fx-background-color: #ffffff;" />
+                  <DatePicker fx:id="txtPaymentDate" prefHeight="40.0" prefWidth="376.0" style="-fx-background-color: #ffffff;" />
                </children>
             </HBox>
                 <HBox spacing="10.0">
                     <children>
                         <Label prefHeight="39.0" prefWidth="128.0" text="     Employee Id" />
-                  <ComboBox fx:id="cmbEmployeeId" prefHeight="40.0" prefWidth="378.0" style="-fx-background-color: #ffffff;" />
+                  <ComboBox fx:id="cmbEmployeeId" prefHeight="40.0" prefWidth="376.0" style="-fx-background-color: #ffffff;" />
                     </children>
                 </HBox>
+            <Label prefHeight="39.0" prefWidth="128.0" />
                 <HBox alignment="CENTER_RIGHT" spacing="70.0">
                     <children>
                         <Button mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #fab1a0;" text="Reset" textFill="WHITE">
@@ -78,6 +81,7 @@
                         </Button>
                     </children>
                 </HBox>
+            <Label prefHeight="39.0" prefWidth="128.0" />
                 <TableView fx:id="tblSalary" onMouseClicked="#onSetData" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colSalaryId" prefWidth="75.0" text="Salary Id" />
@@ -91,6 +95,8 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
+            <Label prefHeight="39.0" prefWidth="128.0" />
+            <Label prefHeight="39.0" prefWidth="128.0" />
             </children>
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

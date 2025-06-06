@@ -16,11 +16,22 @@
    <children>
       <VBox layoutX="20.0" layoutY="7.0" prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Employee Manage" textFill="#150c65">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <HBox prefHeight="0.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="463.0" />
+                  <Label text="Employee Manage" textFill="#150c65">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="21.0" prefWidth="444.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
             <HBox prefHeight="4.0" prefWidth="1093.0" />
             <HBox spacing="10.0" />
             <HBox prefHeight="31.0" prefWidth="1093.0" spacing="10.0">
@@ -55,6 +66,8 @@
                   <TextField fx:id="txtRole" prefHeight="35.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffff; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
             <HBox spacing="10.0" />
             <HBox spacing="10.0" />
             <HBox alignment="CENTER_RIGHT" spacing="70.0">
@@ -77,7 +90,9 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblEmployee" onMouseClicked="#onSetData" VBox.vgrow="ALWAYS">
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <TableView fx:id="tblEmployee" onMouseClicked="#onSetData" prefHeight="373.0" prefWidth="1093.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colid" prefWidth="75.0" text="Employee Id" />
                   <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
@@ -92,6 +107,9 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
+            <HBox prefHeight="4.0" prefWidth="1093.0" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

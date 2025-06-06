@@ -15,11 +15,13 @@
    <children>
       <VBox layoutX="50.0" layoutY="37.0" prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <Label prefHeight="37.0" prefWidth="157.0" text="    " />
             <Label text="Supplier Manage" textFill="#150c65">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <Label prefHeight="37.0" prefWidth="157.0" text="    " />
             <HBox prefHeight="31.0" prefWidth="930.0" spacing="10.0">
                <children>
                   <Label prefHeight="29.0" prefWidth="158.0" text="     Supplier Id" />
@@ -50,6 +52,7 @@
                   <TextField fx:id="txtEmail" prefHeight="35.0" prefWidth="376.0" promptText="Email" style="-fx-border-color: #0984e3; -fx-background-color: #dfe6e9; -fx-border-width: 0 0 2 0;" />
                </children>
             </HBox>
+            <Label prefHeight="37.0" prefWidth="157.0" text="    " />
             <HBox alignment="CENTER_RIGHT" spacing="70.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #fab1a0;" text="Reset" textFill="WHITE">
@@ -70,6 +73,7 @@
                   </Button>
                </children>
             </HBox>
+            <Label prefHeight="37.0" prefWidth="157.0" text="    " />
             <TableView fx:id="tblSupplier" onMouseClicked="#onSetData" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colSupplierId" prefWidth="75.0" text="Supplier Id" />
@@ -82,6 +86,9 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Label prefHeight="37.0" prefWidth="157.0" text="    " />
+            <Label prefHeight="37.0" prefWidth="157.0" text="    " />
+            <Label prefHeight="37.0" prefWidth="157.0" text="    " />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
