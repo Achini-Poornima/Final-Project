@@ -56,6 +56,7 @@ public class UserController implements Initializable {
     private final String usernamePattern = "^[a-zA-Z][a-zA-Z0-9_]{4,19}$";
     private final String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()\\-+])[A-Za-z\\d!@#$%^&*()\\-+]{8,}$";
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -116,9 +117,11 @@ public class UserController implements Initializable {
                 } else {
                     new Alert(Alert.AlertType.WARNING, "Failed to update User!").show();
                 }
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -163,15 +166,14 @@ public class UserController implements Initializable {
         }
     }
 
-    @FXML
-    void tblUserOnMouseClicked(MouseEvent event) {
-        UserDto userDto = tblUser.getSelectionModel().getSelectedItem();
-        if (userDto != null) {
-            lblId.setText(userDto.getUserId());
-            txtUserName.setText(userDto.getUserName());
-            txtPassword.setText(userDto.getPassword());
-            txtRole.setText(userDto.getRole());
-        }
+    public void setDataOnMouseClicked(MouseEvent mouseEvent) {
+            UserDto userDto = tblUser.getSelectionModel().getSelectedItem();
+            if (userDto != null) {
+                lblId.setText(userDto.getUserId());
+                txtUserName.setText(userDto.getUserName());
+                txtPassword.setText(userDto.getPassword());
+                txtRole.setText(userDto.getRole());
+            }
     }
 
     private void resetPage() throws SQLException, ClassNotFoundException {
@@ -179,9 +181,6 @@ public class UserController implements Initializable {
         txtUserName.clear();
         txtPassword.clear();
         txtRole.clear();
-        txtUserName.setStyle("");
-        txtPassword.setStyle("");
-        txtRole.setStyle("");
         tblUser.getSelectionModel().clearSelection();
     }
 
@@ -197,11 +196,12 @@ public class UserController implements Initializable {
 
         try {
             ArrayList<UserDto> users = userModel.getAllUsers();
-            ObservableList<UserDto> userList = FXCollections.observableArrayList();
             if (users != null && !users.isEmpty()) {
-                userList.addAll(users);
+                ObservableList<UserDto> userList = FXCollections.observableArrayList(users);
+                tblUser.setItems(userList);
+            } else {
+                tblUser.setItems(FXCollections.observableArrayList());
             }
-            tblUser.setItems(userList);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load users.").show();
@@ -218,17 +218,16 @@ public class UserController implements Initializable {
 
         txtUserName.setStyle("");
         txtPassword.setStyle("");
-        txtRole.setStyle("");
 
-        if (!isValidUsername) {
+        if(!isValidUsername){
             txtUserName.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-        if (role.isEmpty()) {
+        if(role.isEmpty()){
             txtRole.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-        if (!isValidPassword) {
+        if(!isValidPassword){
             txtPassword.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }

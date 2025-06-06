@@ -37,8 +37,5 @@ public class AppInitializer extends Application {
 
         new Thread(loadingTask).start();
 
-        Image img = new Image(getClass().getResource("/assets/images/login-bg.jpeg").toExternalForm());
-        System.out.println("Loaded: " + !img.isError());
-
     }
 }

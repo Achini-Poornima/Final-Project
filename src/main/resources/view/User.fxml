@@ -64,7 +64,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblUser" onMouseClicked="#setData" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblUser" onMouseClicked="#setDataOnMouseClicked" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colId" prefWidth="75.0" text="User Id" />
                   <TableColumn fx:id="coUserName" prefWidth="75.0" text="User Name" />

@@ -15,15 +15,6 @@
 
 <AnchorPane fx:id="ancLogin" prefHeight="638.0" prefWidth="977.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.javafx.bakerymanagementsystem.controller.LoginController">
    <children>
-      <VBox alignment="CENTER" layoutY="1.0" prefHeight="638.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <ImageView fitHeight="637.0" fitWidth="639.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Pictures/5fcee740-7387-4be3-969a-baf353bfce29.jpeg" />
-               </image>
-            </ImageView>
-         </children>
-      </VBox>
       <VBox alignment="CENTER" layoutX="328.0" layoutY="6.0" prefHeight="638.0" prefWidth="339.0" spacing="20.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" prefHeight="38.0" prefWidth="216.0" text="Login " textFill="WHITE">
@@ -73,5 +64,10 @@
             </Label>
          </children>
       </VBox>
+      <ImageView fitHeight="638.0" fitWidth="639.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../../../../../../Pictures/5fcee740-7387-4be3-969a-baf353bfce29.jpeg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
