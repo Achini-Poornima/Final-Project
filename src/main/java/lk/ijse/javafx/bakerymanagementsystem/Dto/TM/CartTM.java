@@ -9,13 +9,10 @@ import lombok.*;
 @Getter
 @Setter
 public class CartTM {
-
     private String productId;
     private String productName;
     private int quantity;
     private double price;
     private double total;
     private Button btnRemove;
-
-
 }

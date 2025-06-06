@@ -4,12 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lk.ijse.javafx.bakerymanagementsystem.Dto.CustomerDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.SupplierDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.UserDto;
 import lk.ijse.javafx.bakerymanagementsystem.model.SupplierModel;
@@ -30,16 +36,16 @@ public class SupplierController implements Initializable {
     private TableColumn<?, ?> colAddress;
 
     @FXML
-    private TableColumn<SupplierDto,String> colEmail;
+    private TableColumn<SupplierDto, String> colEmail;
 
     @FXML
-    private TableColumn<SupplierDto,String> colName;
+    private TableColumn<SupplierDto, String> colName;
 
     @FXML
-    private TableColumn<SupplierDto,String> colSuppliedIngredient;
+    private TableColumn<SupplierDto, String> colSuppliedIngredient;
 
     @FXML
-    private TableColumn<SupplierDto,String> colSupplierId;
+    private TableColumn<SupplierDto, String> colSupplierId;
 
     @FXML
     private Label lblId;
@@ -94,25 +100,25 @@ public class SupplierController implements Initializable {
 
     @FXML
     void btnResetOnAction(ActionEvent event) {
-         try {
-             resetPage();
-         }catch (Exception e){
-         new Alert(Alert.AlertType.ERROR,"Failed to load next Supplier ID.").show();
-         }
+        try {
+            resetPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load next Supplier ID.").show();
+        }
     }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-         if (!validDatainputs()) return;
+        if (!validDatainputs()) return;
 
-         SupplierDto supplierDto = createSupplierDtoFromInputs();
+        SupplierDto supplierDto = createSupplierDtoFromInputs();
 
-         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-         confirmationAlert.initStyle(StageStyle.UNDECORATED);
-         confirmationAlert.setContentText("Are you sure you want to save this Supplier.");
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.initStyle(StageStyle.UNDECORATED);
+        confirmationAlert.setContentText("Are you sure you want to save this Supplier.");
 
         Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 boolean isSaved = supplierModel.saveSupplier(supplierDto);
                 if (isSaved) {
@@ -123,7 +129,7 @@ public class SupplierController implements Initializable {
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to save supplier.").show();
                 }
-            }catch (SQLIntegrityConstraintViolationException e) {
+            } catch (SQLIntegrityConstraintViolationException e) {
                 new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage()).show();
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
@@ -190,26 +196,26 @@ public class SupplierController implements Initializable {
 
     @FXML
     void onSetData(MouseEvent event) {
-         SupplierDto supplierDto = tblSupplier.getSelectionModel().getSelectedItem();
-         if (supplierDto != null){
-             lblId.setText(supplierDto.getSupplierId());
-             txtName.setText(supplierDto.getName());
-             txtSuppliedIngredient.setText(supplierDto.getSuppliedIngredient());
-             txtaddress.setText(supplierDto.getAddress());
-             txtEmail.setText(supplierDto.getEmail());
-         }
+        SupplierDto supplierDto = tblSupplier.getSelectionModel().getSelectedItem();
+        if (supplierDto != null) {
+            lblId.setText(supplierDto.getSupplierId());
+            txtName.setText(supplierDto.getName());
+            txtSuppliedIngredient.setText(supplierDto.getSuppliedIngredient());
+            txtaddress.setText(supplierDto.getAddress());
+            txtEmail.setText(supplierDto.getEmail());
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-         try {
-             loadNextId();
-             loadTable();
-             resetPage();
-         }catch (Exception e){
-             e.printStackTrace();
-             new Alert(Alert.AlertType.ERROR,"Failed Load Data..").show();
-         }
+        try {
+            loadNextId();
+            loadTable();
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed Load Data..").show();
+        }
     }
 
     private void loadTable() {
@@ -244,4 +250,5 @@ public class SupplierController implements Initializable {
     private void loadNextId() throws SQLException, ClassNotFoundException {
         lblId.setText(supplierModel.getNextId());
     }
+
 }

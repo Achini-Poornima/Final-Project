@@ -14,7 +14,4 @@ public class SalaryDto {
     private double netSalary;
     private String paymentDate;
     private String employeeId;
-
-
-
 }

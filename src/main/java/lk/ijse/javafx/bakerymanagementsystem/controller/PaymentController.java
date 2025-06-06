@@ -87,7 +87,7 @@ public class PaymentController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         PaymentDto paymentDto = createDeliverDtoFromInputs();
         try {
@@ -112,7 +112,7 @@ public class PaymentController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         PaymentDto paymentDto = createDeliverDtoFromInputs();
         try {
@@ -146,11 +146,37 @@ public class PaymentController implements Initializable {
     }
 
     private boolean validDataInputs() {
-        if (txtAmount.getText().trim().isEmpty() || txtPaymentMethod.getText().trim().isEmpty() || txtPaymentDate.getValue() == null || txtOrderId.getValue() == null) {
-            new Alert(Alert.AlertType.WARNING, "Please fill all the fields!").show();
-            return true;
+        boolean isValid = true;
+
+        txtAmount.setStyle("");
+        txtPaymentMethod.setStyle("");
+        txtPaymentMethod.setStyle("");
+        txtPaymentDate.setStyle("");
+
+        if (txtAmount.getText().trim().isEmpty()) {
+            txtAmount.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
-        return false;
+        if (txtPaymentMethod.getText().trim().isEmpty()) {
+            txtPaymentMethod.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (txtPaymentDate.getValue() == null) {
+            txtPaymentDate.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (txtOrderId.getValue() == null) {
+            txtOrderId.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (!isValid) {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+            warningAlert.setTitle("Invalid Input");
+            warningAlert.setHeaderText("Please correct the highlighted fields.");
+            warningAlert.setContentText("One or more inputs are invalid. Fields in red need to be corrected.");
+            warningAlert.show();
+        }
+        return isValid;
     }
 
     @FXML
@@ -217,7 +243,9 @@ public class PaymentController implements Initializable {
         txtPaymentMethod.clear();
         txtPaymentDate.setValue(null);
         txtOrderId.getSelectionModel().clearSelection();
+        txtOrderId.setValue(null);
     }
+
 
     private void loadNextId() throws SQLException, ClassNotFoundException {
         lblId.setText(paymentModel.getNextPaymentId());

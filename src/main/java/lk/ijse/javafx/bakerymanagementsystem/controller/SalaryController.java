@@ -61,7 +61,7 @@ public class SalaryController implements Initializable {
     private TextField txtBonus;
 
     @FXML
-    private ComboBox<String> txtEmployeeId;
+    private ComboBox<String> cmbEmployeeId;
 
     @FXML
     private Label txtNetSalary;
@@ -71,7 +71,7 @@ public class SalaryController implements Initializable {
     private final EmployeeModel employeeModel=new EmployeeModel();
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+void btnDeleteOnAction(ActionEvent event) {
         SalaryDto selectedSalary = tblSalary.getSelectionModel().getSelectedItem();
         if (selectedSalary == null) {
             new Alert(Alert.AlertType.WARNING, "Please select a Salary Details to delete.").show();
@@ -143,23 +143,55 @@ public class SalaryController implements Initializable {
                 Double.parseDouble(txtBonus.getText()),
                 Double.parseDouble(txtNetSalary.getText()),
                 String.valueOf(txtPaymentDate.getValue()),
-                txtEmployeeId.getValue()
+                cmbEmployeeId.getValue()
         );
     }
 
     private boolean validDateInputs() {
-        double basicSalary = Double.parseDouble(txtBasicSalary.getText().trim());
-        double bonus = Double.parseDouble(txtBonus.getText().trim());
-        double netSalary = Double.parseDouble(txtNetSalary.getText().trim());
-        String paymentDate = String.valueOf(txtPaymentDate.getValue());
-        String employeeId = txtEmployeeId.getValue().trim();
+        boolean isValid = true;
 
-        if (basicSalary <= 0 || bonus < 0 || netSalary <= 0 || paymentDate.isEmpty() || employeeId.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Please fill all the fields correctly!").show();
-            return false;
+        txtBasicSalary.setStyle("");
+        txtBonus.setStyle("");
+        txtNetSalary.setStyle("");
+        txtPaymentDate.setStyle("");
+        cmbEmployeeId.setStyle("");
+
+        if (txtBasicSalary.getText().trim().isEmpty()) {
+            txtBasicSalary.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
-        return true;
+
+        if (txtBonus.getText().trim().isEmpty()) {
+            txtBonus.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (txtNetSalary.getText().trim().isEmpty()) {
+            txtNetSalary.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (txtPaymentDate.getValue() == null) {
+            txtPaymentDate.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (cmbEmployeeId.getValue() == null || cmbEmployeeId.getValue().trim().isEmpty()) {
+            cmbEmployeeId.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+            warningAlert.setTitle("Invalid Input");
+            warningAlert.setHeaderText("Please correct the highlighted fields.");
+            warningAlert.setContentText("One or more inputs are invalid. Fields in red need to be corrected.");
+            warningAlert.show();
+        }
+
+        return isValid;
     }
+
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
@@ -167,7 +199,7 @@ public class SalaryController implements Initializable {
 
         SalaryDto salaryDto = createSalaryDtoFromInputs();
             try {
-                boolean isUpdated = salaryModel.updateUser(salaryDto);
+                boolean isUpdated = salaryModel.updateSalary(salaryDto);
                 if (isUpdated) {
                     new Alert(Alert.AlertType.INFORMATION, "Salary Details updated successfully!").show();
                     loadTable();
@@ -193,23 +225,28 @@ public class SalaryController implements Initializable {
              txtBonus.setText(String.valueOf(salaryDto.getBonus()));
              txtNetSalary.setText(String.valueOf(salaryDto.getNetSalary()));
              txtPaymentDate.setValue(LocalDate.parse(salaryDto.getPaymentDate()));
-             txtEmployeeId.setValue(salaryDto.getEmployeeId());
+             cmbEmployeeId.setValue(salaryDto.getEmployeeId());
          }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-         try {
-             loadTable();
-             resetPage();
-             loadNextId();
-             loadEmployeeIds();
-             setNetSalary();
-         }catch (Exception e){
-             e.printStackTrace();
-             new Alert(Alert.AlertType.ERROR,"Fail to Load Data..").show();
-         }
+        try {
+            loadTable();
+            resetPage();
+            loadNextId();
+            loadEmployeeIds();
+
+            txtBasicSalary.setOnKeyReleased(this::setSalary);
+            txtBonus.setOnKeyReleased(this::setSalary);
+            setNetSalary();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to Load Data..").show();
+        }
     }
+
 
     private void setNetSalary() {
         String basicSalaryStr = txtBasicSalary.getText().trim();
@@ -235,7 +272,7 @@ public class SalaryController implements Initializable {
     private void loadEmployeeIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> employeeIds = employeeModel.getAllEmployeeIds();
         ObservableList<String> observableOrderIds = FXCollections.observableArrayList(employeeIds);
-        txtEmployeeId.setItems(observableOrderIds);
+        cmbEmployeeId.setItems(observableOrderIds);
     }
 
     private void loadTable() {
@@ -247,7 +284,7 @@ public class SalaryController implements Initializable {
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
 
         try {
-            ArrayList<SalaryDto> salary = salaryModel.getAllUsers();
+            ArrayList<SalaryDto> salary = salaryModel.getAllSalary();
             if (salary != null && !salary.isEmpty()) {
                 ObservableList<SalaryDto> salaryList = FXCollections.observableArrayList(salary);
                 tblSalary.setItems(salaryList);
@@ -269,12 +306,12 @@ public class SalaryController implements Initializable {
         txtBasicSalary.clear();
         txtBonus.clear();
         setNetSalary();
-        txtEmployeeId.setValue(null);
+        cmbEmployeeId.setValue(null);
         txtPaymentDate.setValue(LocalDate.now());
         tblSalary.getSelectionModel().clearSelection();
     }
 
-    public void setSallary(KeyEvent keyEvent) {
+    public void setSalary(KeyEvent keyEvent) {
         setNetSalary();
     }
 }

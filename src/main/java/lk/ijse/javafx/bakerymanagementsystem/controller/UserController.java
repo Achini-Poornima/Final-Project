@@ -35,7 +35,7 @@ public class UserController implements Initializable {
     private TableColumn<UserDto, String> colRole;
 
     @FXML
-    private TableColumn<UserDto, String> colid;
+    private TableColumn<UserDto, String> colId;
 
     @FXML
     private Label lblId;
@@ -53,6 +53,9 @@ public class UserController implements Initializable {
     private TextField txtUserName;
 
     private final UserModel userModel = new UserModel();
+    private final String usernamePattern = "^[a-zA-Z][a-zA-Z0-9_]{4,19}$\n";
+    private final String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[!@#$%^&*()\\-+])[A-Za-z\\\\d!@#$%^&*()\\-+]{8,}$\n";
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -186,7 +189,7 @@ public class UserController implements Initializable {
     }
 
     private void loadTable() {
-        colid.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         coUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
         colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
@@ -206,29 +209,38 @@ public class UserController implements Initializable {
     }
 
     private boolean validDateInputs() {
-        String userName = txtUserName.getText().trim();
+        String username = txtUserName.getText().trim();
         String password = txtPassword.getText().trim();
         String role = txtRole.getText().trim();
+        boolean isValidUsername = username.matches(usernamePattern);
+        boolean isValidPassword = password.matches(passwordPattern);
+        boolean isValid = true;
 
-        if (userName.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Username is required.").show();
-            txtUserName.requestFocus();
-            return false;
+        txtUserName.setStyle("");
+        txtPassword.setStyle("");
+
+        if(!isValidUsername){
+            txtUserName.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if(role.isEmpty()){
+            txtRole.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if(!isValidPassword){
+            txtPassword.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
 
-        if (password.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Password is required.").show();
-            txtPassword.requestFocus();
-            return false;
+        if (!isValid) {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+            warningAlert.setTitle("Invalid Input");
+            warningAlert.setHeaderText("Please correct the highlighted fields.");
+            warningAlert.setContentText("One or more inputs are invalid. Fields in red need to be corrected.");
+            warningAlert.show();
         }
 
-        if (role.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Role is required.").show();
-            txtRole.requestFocus();
-            return false;
-        }
-
-        return true;
+        return isValid;
     }
 
     private UserDto createUserDtoFromInputs() {

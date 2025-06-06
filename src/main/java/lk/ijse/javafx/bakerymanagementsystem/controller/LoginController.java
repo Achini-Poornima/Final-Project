@@ -3,15 +3,12 @@ package lk.ijse.javafx.bakerymanagementsystem.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.javafx.bakerymanagementsystem.model.UserModel;
-
-import java.io.IOException;
 
 public class LoginController {
 
@@ -24,21 +21,39 @@ public class LoginController {
     @FXML
     private TextField txtUsername;
 
+    private final String usernamePattern = "^[a-zA-Z][a-zA-Z0-9_]{2,19}$\n";
+    private final String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$\n";
+
     @FXML
     void btnLoginOnAction(ActionEvent event) {
-        String inputUsername = txtUsername.getText();
-        String inputPassword = txtPassword.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        boolean isValidUsername = username.matches(usernamePattern);
+        boolean isValidPassword = password.matches(passwordPattern);
+        boolean isValid = true;
 
-        if (inputUsername.isEmpty() || inputPassword.isEmpty()) {
+        txtUsername.setStyle("");
+        txtPassword.setStyle("");
+
+        if(!isValidUsername){
+            txtUsername.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if(!isValidPassword){
+            txtPassword.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (isValid) {
             new Alert(Alert.AlertType.WARNING, "Please enter both username and password.", ButtonType.OK).show();
             return;
         }
 
         try {
             UserModel userModel = new UserModel();
-            boolean isValid = userModel.checkLogin(inputUsername, inputPassword);
+            boolean isValidInput = userModel.checkLogin(username, password);
 
-            if (isValid) {
+            if (isValidInput) {
                 navigateTo("/view/BDashboard.fxml");
             } else {
                 new Alert(Alert.AlertType.WARNING, "Invalid username or password!", ButtonType.OK).show();

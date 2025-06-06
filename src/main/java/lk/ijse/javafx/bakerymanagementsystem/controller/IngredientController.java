@@ -102,7 +102,7 @@ public class IngredientController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         IngredientDto ingredientDto = createDeliverDtoFromInputs();
         try {
@@ -127,7 +127,7 @@ public class IngredientController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         IngredientDto ingredientDto = createDeliverDtoFromInputs();
         try {
@@ -151,21 +151,65 @@ public class IngredientController implements Initializable {
     }
 
     private IngredientDto createDeliverDtoFromInputs() {
+        double quantity = 0.0;
+        try {
+            quantity = Double.parseDouble(txtQuantityAvailable.getText());
+        } catch (NumberFormatException e) {
+        }
         return new IngredientDto(
                 lblId.getText(),
                 txtName.getText(),
-                txtExpierDate.getValue().toString(),
-                Double.parseDouble(txtQuantityAvailable.getText()),
+                String.valueOf(txtExpierDate.getValue()),
+                quantity,
                 txtSupplierId.getValue()
         );
     }
 
+
     private boolean validDataInputs() {
-        if (txtName.getText().isEmpty() || txtExpierDate.getValue() == null || txtQuantityAvailable.getText().isEmpty() || txtSupplierId.getValue() == null) {
-            new Alert(Alert.AlertType.WARNING, "Please fill all the fields").show();
-            return true;
+        boolean isValid = true;
+
+        txtName.setStyle("");
+//        txtExpierDate.setStyle("");
+        txtQuantityAvailable.setStyle("");
+        txtSupplierId.setStyle("");
+
+        if (txtName.getText().isEmpty()) {
+            txtName.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
-        return false;
+
+//        if (txtExpierDate.getValue() == null) {
+//            txtExpierDate.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+//            isValid = false;
+//        }
+
+        if (txtQuantityAvailable.getText().isEmpty()) {
+            txtQuantityAvailable.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        } else {
+            try {
+                Double.parseDouble(txtQuantityAvailable.getText());
+            } catch (NumberFormatException e) {
+                txtQuantityAvailable.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                isValid = false;
+            }
+        }
+
+        if (txtSupplierId.getValue() == null) {
+            txtSupplierId.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+            warningAlert.setTitle("Invalid Input");
+            warningAlert.setHeaderText("Please correct the highlighted fields.");
+            warningAlert.setContentText("One or more inputs are invalid. Fields in red need to be corrected.");
+            warningAlert.show();
+        }
+
+        return isValid;
     }
 
     @FXML

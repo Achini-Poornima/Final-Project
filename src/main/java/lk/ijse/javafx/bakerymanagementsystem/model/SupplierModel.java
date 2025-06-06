@@ -52,4 +52,14 @@ public class SupplierModel {
         String sql = "DELETE FROM Supplier WHERE supplier_id=?";
         return CrudUtil.execute(sql,supplierId);
     }
+
+    public ArrayList<String> getAllSupplierIds() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("SELECT supplier_id FROM Supplier");
+        ArrayList<String> list = new ArrayList<>();
+        while (rst.next()){
+            String id = rst.getString(1);
+            list.add(id);
+        }
+        return list;
+    }
 }

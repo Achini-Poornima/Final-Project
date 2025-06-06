@@ -160,15 +160,15 @@
                <children>
                   <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnCancelOnAction" prefWidth="80.0" style="-fx-background-color: #e74c3c;" text="Cancle" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
-                        <Font name="Calibri Bold" size="14.0" />
+                        <Font name="Calibre Bold" size="14.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnComfirmPaymentOnAction" prefWidth="80.0" style="-fx-background-color: #2ecc71;" text="Confirm Payment" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnConfirmPaymentOnAction" prefWidth="80.0" style="-fx-background-color: #2ecc71;" text="Confirm Payment" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
-                        <Font name="Calibri Bold" size="14.0" />
+                        <Font name="Calibre Bold" size="14.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />

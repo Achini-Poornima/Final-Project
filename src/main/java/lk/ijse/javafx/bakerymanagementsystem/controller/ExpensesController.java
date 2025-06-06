@@ -55,6 +55,8 @@ public class ExpensesController implements Initializable {
 
     ExpensesModel expensesModel = new ExpensesModel();
 
+    private final String amountPattern = "^\\\\d+(\\\\.\\\\d{1,2})?$\n";
+
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         ExpensesDto expensesDto = tblExpenses.getSelectionModel().getSelectedItem();
@@ -98,7 +100,7 @@ public class ExpensesController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         ExpensesDto expensesDto = createExpensesDtoFromInputs();
         try {
@@ -123,7 +125,7 @@ public class ExpensesController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         ExpensesDto expensesDto = createExpensesDtoFromInputs();
         try {
@@ -156,11 +158,32 @@ public class ExpensesController implements Initializable {
     }
 
     private boolean validDataInputs() {
-        if (txtCategory.getText().trim().isEmpty() || txtAmount.getText().trim().isEmpty() || txtDate.getValue() == null) {
-            new Alert(Alert.AlertType.WARNING, "Please fill in all the fields.").show();
-            return true;
+        boolean isValid = true;
+
+        txtCategory.setStyle("");
+        txtAmount.setStyle("");
+        txtDate.setStyle("");
+
+        if (txtCategory.getText().trim().isEmpty()) {
+            txtCategory.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
-        return false;
+        if (txtAmount.getText().trim().isEmpty()) {
+            txtAmount.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (txtDate.getValue() == null) {
+            txtDate.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (!isValid) {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+            warningAlert.setTitle("Invalid Input");
+            warningAlert.setHeaderText("Please correct the highlighted fields.");
+            warningAlert.setContentText("One or more inputs are invalid. Fields in red need to be corrected.");
+            warningAlert.show();
+        }
+        return isValid;
     }
 
     @FXML

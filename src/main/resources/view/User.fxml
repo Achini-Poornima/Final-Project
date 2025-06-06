@@ -66,7 +66,7 @@
             </HBox>
             <TableView fx:id="tblUser" onMouseClicked="#setData" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colid" prefWidth="75.0" text="User Id" />
+                  <TableColumn fx:id="colId" prefWidth="75.0" text="User Id" />
                   <TableColumn fx:id="coUserName" prefWidth="75.0" text="User Name" />
                   <TableColumn fx:id="colRole" prefWidth="75.0" text="Role" />
                   <TableColumn fx:id="colPassword" prefWidth="75.0" text="Password" />

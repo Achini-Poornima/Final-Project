@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SalaryModel {
-    public ArrayList<SalaryDto> getAllUsers() throws SQLException, ClassNotFoundException {
+    public ArrayList<SalaryDto> getAllSalary() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM Salary");
         ArrayList<SalaryDto> salaryDtos = new ArrayList<>();
         while (resultSet.next()){
@@ -49,7 +49,7 @@ public class SalaryModel {
         return CrudUtil.execute(sql, salaryId);
     }
 
-    public boolean updateUser(@NotNull SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
+    public boolean updateSalary(@NotNull SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Salary SET basic_salary = ? , bonus = ? , net_salary = ? , payment_date = ? , employee_id = ? WHERE salary_id = ?";
         return CrudUtil.execute(sql, salaryDto.getBasicSalary(), salaryDto.getBonus(), salaryDto.getNetSalary(), salaryDto.getPaymentDate(), salaryDto.getEmployeeId(), salaryDto.getSalaryId());
     }

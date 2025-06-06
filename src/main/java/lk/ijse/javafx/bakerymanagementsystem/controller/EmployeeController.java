@@ -77,6 +77,8 @@ public class EmployeeController implements Initializable {
     private TextField txtRole;
 
     private final EmployeeModel employeeModel = new EmployeeModel();
+    private final String contactPattern = "^[0-9]{10}$";
+    private final String emailPattern = "^[\\w!#$%&'*+/=?{|}~^-]+(?:\\.[\\w!#$%&'*+/=?{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -109,63 +111,54 @@ public class EmployeeController implements Initializable {
 
     @FXML
     void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-       resetPage();
+        resetPage();
     }
 
-   @FXML
+    @FXML
     void btnSaveOnAction(ActionEvent event) {
         if (!validDateInpts()) return;
         EmployeeDto employeeDto = createEmployeeDtoFromInputs();
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want to save this Employee?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            try {
-                boolean isSaved = employeeModel.saveEmployee(employeeDto);
-                if (isSaved) {
-                    new Alert(Alert.AlertType.INFORMATION, "Employee saved successfully!").show();
-                    loadTable();
-                    resetPage();
-                    loadNextId();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Failed to save Employee!").show();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+
+        try {
+            boolean isSaved = employeeModel.saveEmployee(employeeDto);
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Employee saved successfully!").show();
+                loadTable();
+                resetPage();
+                loadNextId();
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Failed to save Employee!").show();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
         if (!validDateInpts()) return;
         EmployeeDto employeeDto = createEmployeeDtoFromInputs();
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want to update this User?");
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            try {
-                boolean isUpdated = employeeModel.updateEmployee(employeeDto);
-                if (isUpdated) {
-                    new Alert(Alert.AlertType.INFORMATION, "Employee updated successfully!").show();
-                    loadTable();
-                    resetPage();
-                    loadNextId();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Failed to update Employee!").show();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+        try {
+            boolean isUpdated = employeeModel.updateEmployee(employeeDto);
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "Employee updated successfully!").show();
+                loadTable();
+                resetPage();
+                loadNextId();
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Failed to update Employee!").show();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+
     }
 
     private EmployeeDto createEmployeeDtoFromInputs() {
@@ -252,25 +245,52 @@ public class EmployeeController implements Initializable {
 
     private boolean validDateInpts() {
         String name = txtName.getText().trim();
-        String address = txtAddress.getText().trim();
         String contact = txtContactNo.getText().trim();
+        String email = txtEmail.getText().trim();
+        String address = txtAddress.getText().trim();
+        String role = txtRole.getText().trim();
+
+        boolean isValidContact = contact.matches(contactPattern);
+        boolean isValidEmail = email.matches(emailPattern);
+        boolean isValid = true;
+
+        txtName.setStyle("");
+        txtContactNo.setStyle("");
+        txtEmail.setStyle("");
+        txtAddress.setStyle("");
+        txtJoinDate.setStyle("");
+        txtDateOfBirth.setStyle("");
+        txtRole.setStyle("");
 
         if (name.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Name is required").show();
-            txtName.requestFocus();
-            return false;
+            txtName.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (!isValidContact) {
+            txtContactNo.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (!isValidEmail) {
+            txtEmail.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (address.isEmpty()) {
+            txtAddress.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (txtJoinDate.getValue() == null) {
+            txtJoinDate.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (txtDateOfBirth.getValue() == null) {
+            txtDateOfBirth.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (role.isEmpty()) {
+            txtRole.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
 
-        if (address.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Address is required").show();
-            txtAddress.requestFocus();
-            return false;
-        }
-        if (contact.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Contact is required").show();
-            txtContactNo.requestFocus();
-            return false;
-        }
-        return true;
+        return isValid;
     }
 }

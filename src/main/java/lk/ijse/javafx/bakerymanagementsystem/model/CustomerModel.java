@@ -19,7 +19,9 @@ public class CustomerModel {
                     rst.getString(1),
                     rst.getString(2),
                     rst.getString(3),
-                    rst.getString(4)
+                    rst.getString(4),
+                    rst.getString(5),
+                    rst.getString(6)
             );
             list.add(customerDto);
         }
@@ -49,11 +51,13 @@ public class CustomerModel {
 //    }
 
      public boolean saveCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("insert into Customer values (?,?,?,?)",
+        return CrudUtil.execute("insert into Customer values (?,?,?,?,?,?)",
               customerDto.getCustomerId(),
               customerDto.getName(),
               customerDto.getAddress(),
-              customerDto.getContact()
+              customerDto.getNic(),
+              customerDto.getContact(),
+              customerDto.getEmail()
       );
 
     }
@@ -63,10 +67,12 @@ public class CustomerModel {
     }
 
     public boolean updateCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("update Customer set name = ?, address = ?, contact = ? where customer_id = ?",
+        return CrudUtil.execute("update Customer set name = ?, address = ?,nic = ?, contact = ?,email = ? where customer_id = ?",
                 customerDto.getName(),
                 customerDto.getAddress(),
+                customerDto.getNic(),
                 customerDto.getContact(),
+                customerDto.getEmail(),
                 customerDto.getCustomerId());
     }
 

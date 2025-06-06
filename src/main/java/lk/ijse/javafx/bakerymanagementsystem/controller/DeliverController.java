@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 public class DeliverController implements Initializable {
 
     @FXML
+    public DatePicker txtDeliverDate;
+    @FXML
     private AnchorPane ancDeliver;
 
     @FXML
@@ -49,6 +51,8 @@ public class DeliverController implements Initializable {
 
     @FXML
     private TextField txtDeliverAddress;
+
+
 
     @FXML
     private TextField txtDeliverCharge;
@@ -101,11 +105,11 @@ public class DeliverController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         DeliverDto deliverDto = createDeliverDtoFromInputs();
             try {
-                boolean isAdded = deliverModel.saveDliver(deliverDto);
+                boolean isAdded = deliverModel.saveDeliver(deliverDto);
                 if (isAdded){
                     new  Alert(Alert.AlertType.INFORMATION,"Deliver Added Successfully.").show();
                     loadTable();
@@ -128,39 +132,54 @@ public class DeliverController implements Initializable {
         return new DeliverDto(
                 lblId.getText(),
                 txtDeliverAddress.getText(),
-                Double.parseDouble(txtDeliverCharge.getText().trim()),
-                LocalDateTime.now(),
+                Double.parseDouble(txtDeliverCharge.getText()),
+                txtDeliverDate.getValue(),
                 txtOrderId.getValue()
         );
     }
 
+
     private boolean validDataInputs() {
         String address = txtDeliverAddress.getText().trim();
         String charge = txtDeliverCharge.getText().trim();
-        LocalDateTime date =  LocalDateTime.now();
-        String orderId = txtOrderId.getValue().trim();
+        String date = String.valueOf(txtDeliverDate.getValue());
+        boolean isValid = true;
+
+        txtDeliverAddress.setStyle("");
+        txtDeliverCharge.setStyle("");
+        txtDeliverDate.setStyle("");
+        txtOrderId.setStyle("");
 
         if (address.isEmpty()){
-            new Alert(Alert.AlertType.WARNING,"Address is required.").show();
-            txtDeliverAddress.requestFocus();
-            return true;
+            txtDeliverAddress.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
         if (charge.isEmpty()){
-            new Alert(Alert.AlertType.WARNING,"Charges are required.").show();
-            txtDeliverCharge.requestFocus();
-            return true;
+            txtDeliverCharge.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
-        if (orderId.isEmpty()){
-            new Alert(Alert.AlertType.WARNING,"Order Id is required.").show();
-            txtOrderId.requestFocus();
-            return true;
+        if (date.isEmpty()){
+            txtDeliverDate.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
         }
-        return false;
+        if (txtOrderId.getValue() == null || txtOrderId.getValue().trim().isEmpty()) {
+            txtOrderId.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+            warningAlert.setTitle("Invalid Input");
+            warningAlert.setHeaderText("Please correct the highlighted fields.");
+            warningAlert.setContentText("One or more inputs are invalid. Fields in red need to be corrected.");
+            warningAlert.show();
+        }
+        return isValid;
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        if (validDataInputs()) return;
+        if (!validDataInputs()) return;
 
         DeliverDto deliverDto = createDeliverDtoFromInputs();
 
@@ -250,3 +269,5 @@ public class DeliverController implements Initializable {
         lblId.setText(deliverModel.getNextid());
     }
 }
+
+

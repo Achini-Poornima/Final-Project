@@ -14,27 +14,29 @@ import lk.ijse.javafx.bakerymanagementsystem.model.InventoryModel;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class InventoryController implements Initializable {
 
-    public ComboBox<String> txtProductId;
-    public ComboBox<String> txtIngredientId;
+    @FXML
+    private ComboBox<String> txtProductId;
 
     @FXML
-    private TableColumn<InventoryDto,String> colIngredientId;
+    private ComboBox<String> txtIngredientId;
 
     @FXML
-    private TableColumn<InventoryDto,String> colProductId;
+    private TableColumn<InventoryDto, String> colIngredientId;
 
     @FXML
-    private TableColumn<InventoryDto,Integer> colStockQuantity;
+    private TableColumn<InventoryDto, String> colProductId;
 
     @FXML
-    private TableColumn<InventoryDto,String> colInventoryId;
+    private TableColumn<InventoryDto, Integer> colStockQuantity;
+
+    @FXML
+    private TableColumn<InventoryDto, String> colInventoryId;
 
     @FXML
     private Label lblId;
@@ -51,25 +53,24 @@ public class InventoryController implements Initializable {
     void btnDeleteOnAction(ActionEvent event) {
         InventoryDto selectedInventory = tblInventory.getSelectionModel().getSelectedItem();
         if (selectedInventory == null) {
-            new Alert(Alert.AlertType.WARNING, "Please select a user to delete.").show();
+            new Alert(Alert.AlertType.WARNING, "Please select an inventory record to delete.").show();
             return;
         }
 
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.initStyle(StageStyle.UNDECORATED);
-        confirmationAlert.setContentText("Are you sure you want to delete this Inventory Details?");
-
+        confirmationAlert.setContentText("Are you sure you want to delete this inventory record?");
         Optional<ButtonType> result = confirmationAlert.showAndWait();
+
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 boolean isDeleted = inventoryModel.deleteInventory(selectedInventory.getInventoryId());
                 if (isDeleted) {
-                    new Alert(Alert.AlertType.INFORMATION, "Inventory Details deleted successfully!").show();
+                    new Alert(Alert.AlertType.INFORMATION, "Inventory record deleted successfully!").show();
                     loadTable();
                     resetPage();
-                    loadNextId();
                 } else {
-                    new Alert(Alert.AlertType.WARNING, "Failed to delete Inventory Details!").show();
+                    new Alert(Alert.AlertType.WARNING, "Failed to delete inventory record!").show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -89,68 +90,48 @@ public class InventoryController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (!validDateInputs()) return;
+        if (!validInputFields()) return;
 
         InventoryDto inventoryDto = createInventoryDtoFromInputs();
 
         try {
             boolean isAdded = inventoryModel.saveInventory(inventoryDto);
             if (isAdded) {
-                new Alert(Alert.AlertType.INFORMATION, "Inventory Details added successfully!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Inventory record added successfully!").show();
                 loadTable();
                 resetPage();
-                loadNextId();
             } else {
-                new Alert(Alert.AlertType.WARNING, "Failed to add Inventory Details!").show();
+                new Alert(Alert.AlertType.WARNING, "Failed to add inventory record!").show();
             }
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
         }
-
-    }
-
-    private boolean validDateInputs() {
-        if (txtStockQuantity.getText().isEmpty() || txtProductId.getValue() == null || txtIngredientId.getValue() == null) {
-            new Alert(Alert.AlertType.WARNING, "Please fill all the fields.").show();
-            return false;
-        }
-        return true;
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        if (!validDateInputs()) return;
+        if (!validInputFields()) return;
 
         InventoryDto inventoryDto = createInventoryDtoFromInputs();
 
         try {
             boolean isUpdated = inventoryModel.updateInventory(inventoryDto);
             if (isUpdated) {
-                new Alert(Alert.AlertType.INFORMATION, "Inventory Details updated successfully!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Inventory record updated successfully!").show();
                 loadTable();
                 resetPage();
-                loadNextId();
             } else {
-                new Alert(Alert.AlertType.WARNING, "Failed to update Inventory Details!").show();
+                new Alert(Alert.AlertType.WARNING, "Failed to update inventory record!").show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "SQL Error: " + e.getMessage()).show();
         }
     }
 
-    private InventoryDto createInventoryDtoFromInputs() {
-        return new InventoryDto(
-                lblId.getText(),
-                Integer.parseInt(txtStockQuantity.getText()),
-                txtProductId.getValue(),
-                txtIngredientId.getValue());
-    }
-
-        @FXML
+    @FXML
     void onSetData(MouseEvent event) {
         InventoryDto inventoryDto = tblInventory.getSelectionModel().getSelectedItem();
-        if (inventoryDto != null){
+        if (inventoryDto != null) {
             lblId.setText(inventoryDto.getInventoryId());
             txtStockQuantity.setText(String.valueOf(inventoryDto.getStockQuantity()));
             txtProductId.setValue(inventoryDto.getProductId());
@@ -160,37 +141,80 @@ public class InventoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-          try {
-              loadNextId();
-              loadTable();
-              resetPage();
-              loadProductIds();
-              loadIngredientIds();
-          }catch (Exception e){
-              e.printStackTrace();
-              new Alert(Alert.AlertType.ERROR,"Failed to load data.").show();
-          }
+        try {
+            loadNextId();
+            loadTable();
+            loadProductIds();
+            loadIngredientIds();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load initial data.").show();
+        }
+    }
+
+    private boolean validInputFields() {
+        boolean isValid = true;
+
+        txtStockQuantity.setStyle(null);
+        txtProductId.setStyle(null);
+        txtIngredientId.setStyle(null);
+
+        if (txtStockQuantity.getText().isEmpty()) {
+            txtStockQuantity.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        } else {
+            try {
+                Integer.parseInt(txtStockQuantity.getText());
+            } catch (NumberFormatException e) {
+                txtStockQuantity.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                new Alert(Alert.AlertType.WARNING, "Stock quantity must be a valid number.").show();
+                return false;
+            }
+        }
+
+        if (txtProductId.getValue() == null) {
+            txtProductId.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (txtIngredientId.getValue() == null) {
+            txtIngredientId.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            new Alert(Alert.AlertType.WARNING, "Please fill all required fields.").show();
+        }
+
+        return isValid;
+    }
+
+    private InventoryDto createInventoryDtoFromInputs() {
+        return new InventoryDto(
+                lblId.getText(),
+                Integer.parseInt(txtStockQuantity.getText()),
+                txtProductId.getValue(),
+                txtIngredientId.getValue()
+        );
     }
 
     private void loadIngredientIds() {
         try {
             ArrayList<String> ingredientIds = inventoryModel.getIngredientIds();
-            ObservableList<String> observableIngredientIds = FXCollections.observableArrayList(ingredientIds);
-            txtIngredientId.setItems(observableIngredientIds);
-        }catch (Exception e) {
+            txtIngredientId.setItems(FXCollections.observableArrayList(ingredientIds));
+        } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load today's order IDs.").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to load ingredient IDs.").show();
         }
     }
 
     private void loadProductIds() {
         try {
             ArrayList<String> productIds = inventoryModel.getProductIds();
-            ObservableList<String> observableProductIds = FXCollections.observableArrayList(productIds);
-            txtProductId.setItems(observableProductIds);
-        }catch (Exception e) {
+            txtProductId.setItems(FXCollections.observableArrayList(productIds));
+        } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load today's order IDs.").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to load product IDs.").show();
         }
     }
 
@@ -201,16 +225,11 @@ public class InventoryController implements Initializable {
         colIngredientId.setCellValueFactory(new PropertyValueFactory<>("ingredientId"));
 
         try {
-            ArrayList<InventoryDto> inventor = inventoryModel.getAllInventory();
-            if (inventor != null && !inventor.isEmpty()){
-                ObservableList<InventoryDto> InventoryList = FXCollections.observableArrayList(inventor);
-                tblInventory.setItems(InventoryList);
-            } else {
-                tblInventory.setItems(FXCollections.observableArrayList());
-            }
+            ArrayList<InventoryDto> inventoryList = inventoryModel.getAllInventory();
+            tblInventory.setItems(FXCollections.observableArrayList(inventoryList));
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load Inventory.").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to load inventory data.").show();
         }
     }
 
@@ -220,6 +239,13 @@ public class InventoryController implements Initializable {
         txtProductId.setValue(null);
         txtIngredientId.setValue(null);
         tblInventory.getSelectionModel().clearSelection();
+        clearStyles();
+    }
+
+    private void clearStyles() {
+        txtStockQuantity.setStyle(null);
+        txtProductId.setStyle(null);
+        txtIngredientId.setStyle(null);
     }
 
     private void loadNextId() throws SQLException, ClassNotFoundException {

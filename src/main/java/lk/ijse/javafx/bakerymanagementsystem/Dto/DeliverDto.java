@@ -1,6 +1,9 @@
 package lk.ijse.javafx.bakerymanagementsystem.Dto;
 
 import lombok.*;
+
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 @ToString
@@ -13,15 +16,14 @@ public class DeliverDto {
     private String deliverId;
     private String deliverAddress;
     private double deliverCharge;
-    private LocalDateTime deliverDate;
+    private Date deliverDate;
     private String orderId;
 
-    public DeliverDto(String deliverId, String deliverAddress, double deliverCharge, String deliverDate, String orderId) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public DeliverDto(String deliverId, String deliverAddress, double deliverCharge,LocalDate deliverDate, String orderId) {
         this.deliverId = deliverId;
         this.deliverAddress = deliverAddress;
         this.deliverCharge = deliverCharge;
-        this.deliverDate = LocalDateTime.parse(deliverDate, formatter);
+        this.deliverDate = Date.valueOf(deliverDate);
         this.orderId = orderId;
     }
 }

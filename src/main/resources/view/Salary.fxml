@@ -31,13 +31,13 @@
                 <HBox spacing="10.0">
                     <children>
                         <Label prefHeight="39.0" prefWidth="127.0" text="     Basic Salary" />
-                        <TextField fx:id="txtBasicSalary" onKeyReleased="#setSallary" prefHeight="40.0" prefWidth="378.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
+                        <TextField fx:id="txtBasicSalary" onKeyReleased="#setSalary" prefHeight="40.0" prefWidth="378.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
                     </children>
                 </HBox>
                 <HBox spacing="10.0">
                     <children>
                         <Label prefHeight="39.0" prefWidth="128.0" text="     Bonus" />
-                        <TextField fx:id="txtBonus" onKeyReleased="#setSallary" prefHeight="40.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
+                        <TextField fx:id="txtBonus" onKeyReleased="#setSalary" prefHeight="40.0" prefWidth="376.0" style="-fx-border-color: #0984e3; -fx-background-color: #ffffff; -fx-border-width: 0 0 2 0;" />
                     </children>
                 </HBox>
                 <HBox spacing="10.0">
@@ -55,7 +55,7 @@
                 <HBox spacing="10.0">
                     <children>
                         <Label prefHeight="39.0" prefWidth="128.0" text="     Employee Id" />
-                  <ComboBox fx:id="txtEmployeeId" prefHeight="40.0" prefWidth="378.0" style="-fx-background-color: #ffffff;" />
+                  <ComboBox fx:id="cmbEmployeeId" prefHeight="40.0" prefWidth="378.0" style="-fx-background-color: #ffffff;" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT" spacing="70.0">

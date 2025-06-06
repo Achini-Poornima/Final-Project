@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class OrderController implements Initializable {
@@ -99,30 +100,20 @@ public class OrderController implements Initializable {
                 String cartQtyString = txtAddToCartQty.getText();
 
                 if (productId == null) {
-                        new Alert(
-                                Alert.AlertType.WARNING,
-                                "Please select item..!"
-                        ).show();
+                        new Alert(Alert.AlertType.WARNING, "Please select item..!").show();
                         return;
                 }
 
                 if (!cartQtyString.matches("^[0-9]+$")) {
-                        new Alert(
-                                Alert.AlertType.WARNING,
-                                "Please enter valid quantity..!"
-                        ).show();
+                        new Alert(Alert.AlertType.WARNING, "Please enter valid quantity..!").show();
                         return;
                 }
 
                 int cartQty = Integer.parseInt(cartQtyString);
                 int itemStockQty = Integer.parseInt(lblItemQty.getText());
 
-                // 10 < 15
                 if (itemStockQty < cartQty) {
-                        new Alert(
-                                Alert.AlertType.WARNING,
-                                "Not enough item quantity..!"
-                        ).show();
+                        new Alert(Alert.AlertType.WARNING, "Not enough item quantity..!").show();
                         return;
                 }
 
@@ -132,17 +123,12 @@ public class OrderController implements Initializable {
 
                 for (CartTM cartTM : cartData) {
                         if (cartTM.getProductId().equals(productId)) {
-                                // 20 + 10
                                 int newQty = cartTM.getQuantity() + cartQty;
 
                                 if (itemStockQty < newQty) {
-                                        new Alert(
-                                                Alert.AlertType.WARNING,
-                                                "Not enough item quantity..!"
-                                        ).show();
+                                        new Alert(Alert.AlertType.WARNING, "Not enough item quantity..!").show();
                                         return;
                                 }
-
                                 cartTM.setQuantity(newQty);
                                 cartTM.setTotal(newQty * price);
 
@@ -226,7 +212,7 @@ public class OrderController implements Initializable {
         }
 
     private void loadOrderPayment() throws IOException {
-        Parent rootNode = FXMLLoader.load(getClass().getResource("/view/OrderPayment.fxml"));
+        Parent rootNode = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderPayment.fxml")));
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(rootNode));
