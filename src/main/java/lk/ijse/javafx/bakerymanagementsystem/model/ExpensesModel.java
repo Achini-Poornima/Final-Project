@@ -1,7 +1,7 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
 import lk.ijse.javafx.bakerymanagementsystem.Dto.ExpensesDto;
-import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
+import lk.ijse.javafx.bakerymanagementsystem.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ExpensesModel {
     public static ArrayList<ExpensesDto> getAllExpenses() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Expenses");
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM Expenses");
         ArrayList<ExpensesDto> expensesList = new ArrayList<>();
         while (resultSet.next()) {
             expensesList.add(new ExpensesDto(
@@ -23,7 +23,7 @@ public class ExpensesModel {
     }
 
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT expenses_id FROM Expenses ORDER BY expenses_id desc limit 1");
+        ResultSet resultSet = SQLUtil.execute("SELECT expenses_id FROM Expenses ORDER BY expenses_id desc limit 1");
         char tableChar = 'E';
         if (resultSet.next()){
             String lastId = resultSet.getString(1);
@@ -38,16 +38,16 @@ public class ExpensesModel {
 
     public boolean deleteExpenses(String expensesId) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM Expenses WHERE expenses_id = ?";
-        return CrudUtil.execute(sql, expensesId);
+        return SQLUtil.execute(sql, expensesId);
     }
 
     public boolean saveExpenses(ExpensesDto expensesDto) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Expenses(expenses_id, category, amount, date) VALUES (?,?,?,?)";
-        return CrudUtil.execute(sql, expensesDto.getExpensesId(), expensesDto.getCategory(), expensesDto.getAmount(), expensesDto.getDate());
+        return SQLUtil.execute(sql, expensesDto.getExpensesId(), expensesDto.getCategory(), expensesDto.getAmount(), expensesDto.getDate());
     }
 
     public boolean updateExpenses(ExpensesDto expensesDto) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Expenses SET category = ?, amount = ?, date = ? WHERE expenses_id = ?";
-        return CrudUtil.execute(sql,  expensesDto.getCategory(),expensesDto.getAmount(),expensesDto.getDate(), expensesDto.getExpensesId());
+        return SQLUtil.execute(sql,  expensesDto.getCategory(),expensesDto.getAmount(),expensesDto.getDate(), expensesDto.getExpensesId());
     }
 }

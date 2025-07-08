@@ -16,13 +16,17 @@
       <VBox layoutY="-13.0" prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label prefHeight="39.0" prefWidth="128.0" />
-            <Label text="User Manage" textFill="#150c65">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
+            <HBox alignment="CENTER" prefHeight="63.0" prefWidth="1079.0" style="-fx-background-color: #0984e3; -fx-border-color: #ffffff; -fx-border-width: 0 0 2 0;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="246.0" text="User Manage" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <Label prefHeight="39.0" prefWidth="128.0" />
-            <HBox prefHeight="53.0" prefWidth="560.0" spacing="10.0">
+            <HBox prefHeight="11.0" prefWidth="862.0" spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" text="     User Id" />
                   <Label fx:id="lblId" prefHeight="27.0" prefWidth="132.0" style="-fx-background-color: #dfe6e9; -fx-border-color: #0984e3; -fx-border-width: 0 0 2 0;" />
@@ -68,7 +72,7 @@
                </children>
             </HBox>
             <Label prefHeight="39.0" prefWidth="128.0" />
-            <TableView fx:id="tblUser" onMouseClicked="#setDataOnMouseClicked" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblUser" onMouseClicked="#setDataOnMouseClicked" prefHeight="163.0" prefWidth="862.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colId" prefWidth="75.0" text="User Id" />
                   <TableColumn fx:id="coUserName" prefWidth="75.0" text="User Name" />

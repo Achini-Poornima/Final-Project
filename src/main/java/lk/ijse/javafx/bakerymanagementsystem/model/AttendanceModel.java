@@ -1,9 +1,7 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
-import javafx.scene.input.KeyEvent;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.AttendanceDto;
-import lk.ijse.javafx.bakerymanagementsystem.Dto.SalaryDto;
-import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
+import lk.ijse.javafx.bakerymanagementsystem.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 
 public class AttendanceModel {
     public ArrayList<AttendanceDto> getAllAttendance() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Attendance");
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM Attendance");
         ArrayList<AttendanceDto> attendanceDtos = new ArrayList<>();
         while (resultSet.next()){
             attendanceDtos.add(new AttendanceDto(
@@ -26,7 +24,7 @@ public class AttendanceModel {
     }
 
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT attendance_id FROM Attendance ORDER BY attendance_id DESC LIMIT 1");
+        ResultSet resultSet = SQLUtil.execute("SELECT attendance_id FROM Attendance ORDER BY attendance_id DESC LIMIT 1");
         char tableChar = 'A';
         if (resultSet.next()) {
             String lastId = resultSet.getString(1);
@@ -41,16 +39,16 @@ public class AttendanceModel {
 
     public boolean updateAttendance(AttendanceDto attendanceDto) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Attendance SET employee_id = ?,in_time = ?,out_time = ?,date = ? WHERE attendance_id = ?";
-        return  CrudUtil.execute(sql,attendanceDto.getEmployeeId(),attendanceDto.getInTime(),attendanceDto.getOutTime(),attendanceDto.getDate(),attendanceDto.getAttendanceId());
+        return  SQLUtil.execute(sql,attendanceDto.getEmployeeId(),attendanceDto.getInTime(),attendanceDto.getOutTime(),attendanceDto.getDate(),attendanceDto.getAttendanceId());
     }
 
     public boolean saveAttendance(AttendanceDto attendanceDto) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Attendance(attendance_id, employee_id, in_time, out_time, date) VALUES (?,?,?,?,?);";
-        return CrudUtil.execute(sql,attendanceDto.getAttendanceId(),attendanceDto.getEmployeeId(),attendanceDto.getInTime(),attendanceDto.getOutTime(),attendanceDto.getDate());
+        return SQLUtil.execute(sql,attendanceDto.getAttendanceId(),attendanceDto.getEmployeeId(),attendanceDto.getInTime(),attendanceDto.getOutTime(),attendanceDto.getDate());
     }
 
     public boolean deleteAttendance(String attendanceId) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM Attendance WHERE attendance_id = ?";
-        return CrudUtil.execute(sql,attendanceId);
+        return SQLUtil.execute(sql,attendanceId);
     }
 }

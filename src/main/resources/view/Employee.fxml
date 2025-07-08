@@ -21,7 +21,6 @@
             <HBox prefHeight="4.0" prefWidth="1093.0" />
             <HBox prefHeight="4.0" prefWidth="1093.0">
                <children>
-                  <Label prefHeight="21.0" prefWidth="463.0" />
                   <Label text="Employee Manage" textFill="#150c65">
                      <font>
                         <Font name="System Bold" size="18.0" />

@@ -2,7 +2,7 @@ package lk.ijse.javafx.bakerymanagementsystem.model;
 
 import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDetailsDto;
 import lk.ijse.javafx.bakerymanagementsystem.Dto.ProductDto;
-import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
+import lk.ijse.javafx.bakerymanagementsystem.dao.SQLUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ProductModel {
     public ArrayList<String> getAllProductIds() throws SQLException, ClassNotFoundException {
-            ResultSet rst = CrudUtil.execute("select product_id from Product");
+            ResultSet rst = SQLUtil.execute("select product_id from Product");
             ArrayList<String> list = new ArrayList<>();
             while (rst.next()) {
                 String id = rst.getString(1);
@@ -22,7 +22,7 @@ public class ProductModel {
 
     }
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT product_id FROM Product ORDER BY product_id DESC limit 1");
+        ResultSet resultSet = SQLUtil.execute("SELECT product_id FROM Product ORDER BY product_id DESC limit 1");
         char tableChar = 'P';
         if (resultSet.next()) {
             String lastId = resultSet.getString(1);
@@ -37,7 +37,7 @@ public class ProductModel {
 
     public ProductDto findById(String selectedId) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM Product WHERE product_id=?";
-        ResultSet resultset = CrudUtil.execute(sql, selectedId);
+        ResultSet resultset = SQLUtil.execute(sql, selectedId);
         if (resultset.next()) {
             return new ProductDto(
                     resultset.getString("product_id"),
@@ -51,7 +51,7 @@ public class ProductModel {
     }
 
     public ArrayList<ProductDto> getAllProducts() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Product");
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM Product");
         ArrayList<ProductDto> productDtos = new ArrayList<>();
         while (resultSet.next()){
             productDtos.add(new ProductDto(
@@ -67,21 +67,21 @@ public class ProductModel {
 
     public boolean reduceqty(OrderDetailsDto orderDetailsDTO) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Product SET stock_quantity=stock_quantity-? WHERE product_id=?";
-        return CrudUtil.execute(sql, orderDetailsDTO.getQuantity(), orderDetailsDTO.getProductId());
+        return SQLUtil.execute(sql, orderDetailsDTO.getQuantity(), orderDetailsDTO.getProductId());
     }
 
     public boolean deleteProduct(String productId) throws SQLException, ClassNotFoundException {
         String sql  = "DELETE FROM Product WHERE Product_id = ?";
-        return CrudUtil.execute(sql,productId);
+        return SQLUtil.execute(sql,productId);
     }
 
     public boolean saveProduct(@NotNull ProductDto productDto) throws SQLException, ClassNotFoundException {
         String sql  = "INSERT INTO Product(product_id,name,price,stock_quantity,supplier_id) VALUES (?,?,?,?,?)";
-        return CrudUtil.execute(sql,productDto.getProductId(),productDto.getName(),productDto.getPrice(),productDto.getStockQuantity(),productDto.getSupplierId());
+        return SQLUtil.execute(sql,productDto.getProductId(),productDto.getName(),productDto.getPrice(),productDto.getStockQuantity(),productDto.getSupplierId());
     }
 
     public boolean updateProduct(@NotNull ProductDto productDto) throws SQLException, ClassNotFoundException {
         String sql  = "UPDATE Product SET name = ?,price = ?,stock_quantity = ?,supplier_id = ? WHERE product_id = ?";
-        return CrudUtil.execute(sql,productDto.getName(),productDto.getPrice(),productDto.getStockQuantity(),productDto.getSupplierId(),productDto.getProductId());
+        return SQLUtil.execute(sql,productDto.getName(),productDto.getPrice(),productDto.getStockQuantity(),productDto.getSupplierId(),productDto.getProductId());
     }
 }

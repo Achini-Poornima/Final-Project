@@ -1,19 +1,17 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
 import lk.ijse.javafx.bakerymanagementsystem.Dto.EmployeeDto;
-import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
+import lk.ijse.javafx.bakerymanagementsystem.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class EmployeeModel {
 
     public static ArrayList<EmployeeDto> getAllEmployees() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute("SELECT * FROM Employee");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM Employee");
 
         ArrayList<EmployeeDto> list = new ArrayList<>();
         while (rst.next()) {
@@ -33,7 +31,7 @@ public class EmployeeModel {
     }
 
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute("select employee_id from Employee order by employee_id desc limit 1");
+        ResultSet rst = SQLUtil.execute("select employee_id from Employee order by employee_id desc limit 1");
 
         char tableChr = 'E';
 
@@ -50,7 +48,7 @@ public class EmployeeModel {
     }
 
     public boolean saveEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("insert into Employee values (?,?,?,?,?,?,?,?)",
+        return SQLUtil.execute("insert into Employee values (?,?,?,?,?,?,?,?)",
                 employeeDto.getEmployeeId(),
                 employeeDto.getName(),
                 employeeDto.getContactNo(),
@@ -63,11 +61,11 @@ public class EmployeeModel {
     }
 
     public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("delete from Employee where employee_id = ?", employeeId);
+        return SQLUtil.execute("delete from Employee where employee_id = ?", employeeId);
     }
 
     public boolean updateEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("update Employee set name = ?, contact_no = ?, email = ?, address = ?, join_date = ?, date_of_birth = ?, role = ? where employee_id = ?",
+        return SQLUtil.execute("update Employee set name = ?, contact_no = ?, email = ?, address = ?, join_date = ?, date_of_birth = ?, role = ? where employee_id = ?",
                 employeeDto.getName(),
                 employeeDto.getContactNo(),
                 employeeDto.getEmail(),
@@ -79,7 +77,7 @@ public class EmployeeModel {
     }
 
     public ArrayList<String> getAllEmployeeIds() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute(
+        ResultSet rst = SQLUtil.execute(
                 "select employee_id from Employee"
         );
 
@@ -92,7 +90,7 @@ public class EmployeeModel {
     }
 
     public String findNameById(String employeeId) throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute(
+        ResultSet rst = SQLUtil.execute(
                 "select name from Employee where employee_id=?",
                 employeeId
         );

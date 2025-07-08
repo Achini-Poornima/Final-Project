@@ -17,23 +17,16 @@
    <children>
       <VBox layoutX="10.0" layoutY="-3.0" prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="45.0" prefWidth="560.0" spacing="10.0">
+            <HBox alignment="CENTER" prefHeight="74.0" prefWidth="1125.0" spacing="10.0" style="-fx-background-color: #0984e3; -fx-border-color: #ffffff; -fx-border-width: 0 0 2 0;">
                <children>
-                  <Label prefHeight="39.0" prefWidth="128.0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="45.0" prefWidth="560.0" spacing="10.0">
-               <children>
-                  <Label prefHeight="21.0" prefWidth="496.0" />
-                  <Label prefHeight="28.0" prefWidth="195.0" text="DelIver Manage" textFill="#150c65">
+                  <Label prefHeight="38.0" prefWidth="195.0" text="Deliver Manage" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="21.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="21.0" prefWidth="496.0" />
                </children>
             </HBox>
-            <HBox prefHeight="45.0" prefWidth="560.0" spacing="10.0">
+            <HBox prefHeight="11.0" prefWidth="1125.0" spacing="10.0">
                <children>
                   <Label prefHeight="39.0" prefWidth="128.0" />
                </children>
@@ -98,7 +91,7 @@
                   <Label prefHeight="39.0" prefWidth="128.0" />
                </children>
             </HBox>
-            <TableView fx:id="tblDeliver" onMouseClicked="#setData" prefHeight="336.0" prefWidth="1144.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblDeliver" onMouseClicked="#setData" prefHeight="298.0" prefWidth="1125.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colId" prefWidth="75.0" text="Deliver Id" />
                   <TableColumn fx:id="colDeliverAddress" prefWidth="75.0" text="Deliver Address" />

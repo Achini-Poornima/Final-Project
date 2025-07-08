@@ -1,7 +1,7 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
 import lk.ijse.javafx.bakerymanagementsystem.Dto.OrderDetailsDto;
-import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
+import lk.ijse.javafx.bakerymanagementsystem.dao.SQLUtil;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,6 +25,6 @@ public class OrderDetailsModel {
     }
     private boolean saveOrderDetailsList(OrderDetailsDto orderDetailsDTO) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Order_Details VALUES (?,?,?,?)";
-        return CrudUtil.execute(sql,orderDetailsDTO.getOrderId(),orderDetailsDTO.getProductId(),orderDetailsDTO.getQuantity(),orderDetailsDTO.getPrice());
+        return SQLUtil.execute(sql,orderDetailsDTO.getOrderId(),orderDetailsDTO.getProductId(),orderDetailsDTO.getQuantity(),orderDetailsDTO.getPrice());
 
     }}

@@ -18,13 +18,16 @@
       <VBox prefHeight="413.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #b2bec3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label prefHeight="31.0" prefWidth="148.0" />
-            <Label text="Payment Manage" textFill="#150c65">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <HBox alignment="CENTER" prefHeight="63.0" prefWidth="1079.0" spacing="10.0" style="-fx-background-color: #0984e3; -fx-border-color: #ffffff; -fx-border-width: 0 0 2 0;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="224.0" text="Payment Manage" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <Label prefHeight="31.0" prefWidth="148.0" />
-            <HBox prefHeight="0.0" prefWidth="963.0" spacing="10.0" />
             <HBox prefHeight="27.0" prefWidth="963.0" spacing="10.0">
                <children>
                   <Label prefHeight="31.0" prefWidth="148.0" text="     Payment Id" />
@@ -69,7 +72,7 @@
                      </font>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #0984e3;" text="Update" textFill="WHITE" />
-                  <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #55efc4;" text="Save" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="100.0" style="-fx-background-color: #b2bec3;" text="Save" textFill="#b2bec3">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -89,6 +92,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Label prefHeight="31.0" prefWidth="148.0" />
             <Label prefHeight="31.0" prefWidth="148.0" />
             <Label prefHeight="31.0" prefWidth="148.0" />
          </children>

@@ -55,7 +55,7 @@ public class CustomerController implements Initializable {
     @FXML
     private TextField txtName;
 
-    private final String nicPattern = "^[0-9]{9}[vVxX]$|^[0-9]{12}$";
+    private final String nicPattern =  "^[0-9]{9}[vVxX]$|^[0-9]{12}$";
     private final String phonePattern = "^[0-9]{10}$";
     private final String emailPattern = "^[\\w!#$%&'*+/=?{|}~^-]+(?:\\.[\\w!#$%&'*+/=?{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     private final CustomerModel customerModel = new CustomerModel();

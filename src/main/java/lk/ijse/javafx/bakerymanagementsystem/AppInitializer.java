@@ -19,7 +19,7 @@ public class AppInitializer extends Application {
         Task<Scene> loadingTask = new Task<>() {
             @Override
             protected Scene call() throws Exception {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ALogin.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/BDashboard.fxml"));
                 return new Scene(fxmlLoader.load());
             }
         };

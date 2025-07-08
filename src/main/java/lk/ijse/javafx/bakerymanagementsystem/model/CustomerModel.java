@@ -1,7 +1,7 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
 import lk.ijse.javafx.bakerymanagementsystem.Dto.CustomerDto;
-import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
+import lk.ijse.javafx.bakerymanagementsystem.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import java.util.List;
 public class CustomerModel {
 
     public static List<CustomerDto> getAllCustomers() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute("SELECT * FROM Customer");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM Customer");
 
         ArrayList<CustomerDto> list = new ArrayList<>();
         while (rst.next()) {
@@ -28,7 +28,7 @@ public class CustomerModel {
         return list;
     }
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute("select customer_id from Customer order by customer_id desc limit 1");
+        ResultSet rst = SQLUtil.execute("select customer_id from Customer order by customer_id desc limit 1");
 
         char tableChr = 'C';
 
@@ -51,7 +51,7 @@ public class CustomerModel {
 //    }
 
      public boolean saveCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("insert into Customer values (?,?,?,?,?,?)",
+        return SQLUtil.execute("insert into Customer values (?,?,?,?,?,?)",
               customerDto.getCustomerId(),
               customerDto.getName(),
               customerDto.getAddress(),
@@ -63,11 +63,11 @@ public class CustomerModel {
     }
 
     public boolean deleteCustomer(String customerId) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("delete from Customer where customer_id = ?",customerId);
+        return SQLUtil.execute("delete from Customer where customer_id = ?",customerId);
     }
 
     public boolean updateCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute("update Customer set name = ?, address = ?,nic = ?, contact = ?,email = ? where customer_id = ?",
+        return SQLUtil.execute("update Customer set name = ?, address = ?,nic = ?, contact = ?,email = ? where customer_id = ?",
                 customerDto.getName(),
                 customerDto.getAddress(),
                 customerDto.getNic(),
@@ -77,7 +77,7 @@ public class CustomerModel {
     }
 
     public ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute(
+        ResultSet rst = SQLUtil.execute(
                 "select customer_id from Customer"
         );
         ArrayList<String> list = new ArrayList<>();
@@ -89,7 +89,7 @@ public class CustomerModel {
     }
 
     public String findNameById(String customerId) throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.execute(
+        ResultSet rst = SQLUtil.execute(
                 "select name from Customer where customer_id=?",
                 customerId
         );

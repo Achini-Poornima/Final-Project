@@ -8,7 +8,6 @@ public class DbConnection {
     private static DbConnection dbConnection;
     private Connection connection;
 
-    // Proper constructor
     private DbConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bakery", "root", "pmysql");

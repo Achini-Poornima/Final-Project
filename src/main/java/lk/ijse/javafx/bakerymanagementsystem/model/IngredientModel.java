@@ -1,7 +1,7 @@
 package lk.ijse.javafx.bakerymanagementsystem.model;
 
 import lk.ijse.javafx.bakerymanagementsystem.Dto.IngredientDto;
-import lk.ijse.javafx.bakerymanagementsystem.Util.CrudUtil;
+import lk.ijse.javafx.bakerymanagementsystem.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class IngredientModel {
 
     public static ArrayList<IngredientDto> getAllDelivers() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Ingredient");
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM Ingredient");
         ArrayList<IngredientDto> ingredientDtos = new ArrayList<>();
         while (resultSet.next()){
             ingredientDtos.add(new IngredientDto(
@@ -25,7 +25,7 @@ public class IngredientModel {
     }
 
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT ingredient_id FROM Ingredient ORDER BY ingredient_id desc limit 1");
+        ResultSet resultSet = SQLUtil.execute("SELECT ingredient_id FROM Ingredient ORDER BY ingredient_id desc limit 1");
         char tableChar = 'I';
         if (resultSet.next()){
             String lastId = resultSet.getString(1);
@@ -40,7 +40,7 @@ public class IngredientModel {
 
     public ArrayList<String> getAllSupplierIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> supplierIds = new ArrayList<>();
-        ResultSet rs = CrudUtil.execute("SELECT supplier_id FROM Supplier");
+        ResultSet rs = SQLUtil.execute("SELECT supplier_id FROM Supplier");
         while (rs.next()) {
             supplierIds.add(rs.getString("supplier_id"));
         }
@@ -49,16 +49,16 @@ public class IngredientModel {
 
     public boolean deleteIngredient(String ingredientId) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM Ingredient WHERE ingredient_id=?";
-        return CrudUtil.execute(sql, ingredientId);
+        return SQLUtil.execute(sql, ingredientId);
     }
 
     public boolean saveIngredient(IngredientDto ingredientDto) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO Ingredient VALUES (?,?,?,?,?)";
-        return CrudUtil.execute(sql, ingredientDto.getIngredientId(), ingredientDto.getName(), ingredientDto.getExpireDate(), ingredientDto.getQuantityAvailable(), ingredientDto.getSupplierId());
+        return SQLUtil.execute(sql, ingredientDto.getIngredientId(), ingredientDto.getName(), ingredientDto.getExpireDate(), ingredientDto.getQuantityAvailable(), ingredientDto.getSupplierId());
     }
 
     public boolean updateIngredient(IngredientDto ingredientDto) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Ingredient SET name=?, expire_date=?, quantity_available=?, supplier_id=? WHERE ingredient_id=?";
-        return CrudUtil.execute(sql, ingredientDto.getName(), ingredientDto.getExpireDate(), ingredientDto.getQuantityAvailable(), ingredientDto.getSupplierId(), ingredientDto.getIngredientId());
+        return SQLUtil.execute(sql, ingredientDto.getName(), ingredientDto.getExpireDate(), ingredientDto.getQuantityAvailable(), ingredientDto.getSupplierId(), ingredientDto.getIngredientId());
     }
 }

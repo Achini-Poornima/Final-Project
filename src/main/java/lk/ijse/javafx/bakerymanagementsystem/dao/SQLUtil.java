@@ -1,4 +1,4 @@
-package lk.ijse.javafx.bakerymanagementsystem.Util;
+package lk.ijse.javafx.bakerymanagementsystem.dao;
 
 import lk.ijse.javafx.bakerymanagementsystem.DBConnection.DbConnection;
 
@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CrudUtil {
+public class SQLUtil {
     public static <T> T execute(String sql, Object... obj) throws SQLException, ClassNotFoundException {
 
         Connection  connection = DbConnection.getInstance().getConnection();
